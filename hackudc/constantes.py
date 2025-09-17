@@ -18,13 +18,3 @@ NIVELES_ESTUDIO = (
     ("MASTER", "Máster"),
     ("OTRO", "Otro (Especificar en notas)"),
 )
-
-# ID (auto), nombre
-RESTRICCIONES_ALIMENTARIAS = (
-    ("Vegetariano", "Vegetariano"),
-    ("Vegano", "Vegano"),
-    ("Sin gluten", "Sin gluten"),
-    ("Sin lactosa", "Sin lactosa"),
-    ("Diabético", "Diabético"),
-    ("Otro", "Otro (Especificar en notas)"),
-)

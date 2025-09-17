@@ -1,12 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from hackudc.constantes import (
-    GENEROS,
-    NIVELES_ESTUDIO,
-    TALLAS_CAMISETA,
-    RESTRICCIONES_ALIMENTARIAS,
-)
+from hackudc.constantes import GENEROS, NIVELES_ESTUDIO, TALLAS_CAMISETA
 
 
 # Create your models here.
@@ -86,9 +81,7 @@ class Participante(Persona):
 
 class RestriccionAlimentaria(models.Model):
     id_restriccion = models.AutoField(primary_key=True)
-    nombre = models.CharField(
-        max_length=100, unique=True, choices=RESTRICCIONES_ALIMENTARIAS
-    )
+    nombre = models.CharField(max_length=100, unique=True)
 
     class Meta:
         verbose_name = "Restricción Alimentaria"

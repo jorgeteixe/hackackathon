@@ -135,6 +135,11 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # Media files (User uploaded content)
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Fixtures (initial data)
+FIXTURE_DIRS = [
+    BASE_DIR / "fixtures",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
