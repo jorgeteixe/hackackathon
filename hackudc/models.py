@@ -1,7 +1,26 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from hackudc.constantes import GENEROS, NIVELES_ESTUDIO, TALLAS_CAMISETA
+GENEROS = (
+    ("HOMBRE", "Hombre"),
+    ("MUJER", "Mujer"),
+    ("OTRO", "Otro"),
+)
+
+TALLAS_CAMISETA = (
+    ("S", "S"),
+    ("M", "M"),
+    ("L", "L"),
+    ("XL", "XL"),
+    ("XXL", "XXL"),
+)
+
+NIVELES_ESTUDIO = (
+    ("FORMACION_PROFESIONAL", "Formación Profesional"),
+    ("UNIVERSIDAD", "Universidad"),
+    ("MASTER", "Máster"),
+    ("OTRO", "Otro (Especificar en notas)"),
+)
 
 
 # Create your models here.
