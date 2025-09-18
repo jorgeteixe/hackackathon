@@ -67,6 +67,10 @@ class Mentor(Persona):
 
 
 class Participante(Persona):
+    @staticmethod
+    def ruta_cv(instance, filename):
+        return f"cv/{instance.dni}_{instance.correo.replace("@", "-").replace(".", "-")}_pendiente.pdf"
+
     telefono = models.CharField(max_length=16, null=True, blank=True)
     ano_nacimiento = models.PositiveIntegerField(
         null=True,
@@ -88,6 +92,7 @@ class Participante(Persona):
         max_length=10, choices=TALLAS_CAMISETA, null=True, blank=True
     )
     motivacion = models.TextField(null=True, blank=True)
+    cv = models.FileField(upload_to=ruta_cv, null=True)
     compartir_cv = models.BooleanField(default=False)
     aceptado = models.BooleanField(default=False)
 

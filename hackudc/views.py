@@ -15,7 +15,7 @@ def registro(request: HttpRequest):
     if request.method == "GET":
         return render(request, "registro.html", {"form": ParticipanteForm()})
 
-    form = ParticipanteForm(request.POST)
+    form = ParticipanteForm(request.POST, request.FILES)
     if form.is_valid():
         form.save()
         return HttpResponse("OK")

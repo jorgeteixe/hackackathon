@@ -2,5 +2,8 @@
 .env
 db.sqlite3
 
+# Media
+media
+
 # Python
 __pycache__

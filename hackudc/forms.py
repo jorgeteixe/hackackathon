@@ -21,6 +21,7 @@ class ParticipanteForm(forms.ModelForm):
             "ciudad",
             "quiere_creditos",
             "talla_camiseta",
+            "cv",
             "compartir_cv",
             "motivacion",
             "notas",
@@ -38,12 +39,14 @@ class ParticipanteForm(forms.ModelForm):
             "ciudad": "Ciudad de residencia",
             "quiere_creditos": "¿Quieres solicitar créditos?",
             "talla_camiseta": "Talla de camiseta",
+            "cv": "CV",
             "compartir_cv": "¿Autorizas compartir tu CV con los patrocinadores?",
             "motivacion": "Motivación para participar en el HackUDC",
             "notas": "Notas",
         }
 
         help_texts = {
+            "cv": "Currículum vitae en formato PDF. Lo usaremos para conocerte mejor y lo haremos llegar a nuestros patrocinadores si lo deseas.",
             "notas": "Otros datos que consideres relevantes (alergias, etc.).",
         }
 
