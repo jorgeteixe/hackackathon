@@ -136,9 +136,11 @@ STATICFILES_DIRS = [
 ]
 
 # Media files (User uploaded content)
+# https://docs.djangoproject.com/en/5.1/topics/files/
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Fixtures (initial data)
+# https://docs.djangoproject.com/en/5.1/topics/db/fixtures/
 FIXTURE_DIRS = [
     BASE_DIR / "fixtures",
 ]
