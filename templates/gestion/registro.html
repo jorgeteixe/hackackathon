@@ -1,6 +1,16 @@
+{% extends 'marco.html' %}
+{% load static %}
+
+{% block title %}Registro{% endblock title %}
+
+{% block content %}
 <h1>Registro</h1>
+{% if mensaje %}
+    <p style="color: red; font-weight: bold;">{{ mensaje }}</p>
+{% endif %}
 <form action="{% url 'alta' %}" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
 </form>
+{% endblock content %}
