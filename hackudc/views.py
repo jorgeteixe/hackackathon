@@ -84,41 +84,39 @@ def alta(request: HttpRequest):
 
 @require_http_methods(["GET", "POST"])
 def pases(request: HttpRequest):
-    """Pases del evento. Registra un pase y muestra si es la primera vez si ese participante utiliza ese pase"""
-    actual = (
-        TipoPase.objects.filter(inicio_validez__lte=datetime.now())
-        .order_by("inicio_validez")
-        .last()
-    )
+    """Pases del evento. Registra un pase y muestra si es la primera vez que ese participante utiliza ese pase"""
+
     mensaje = None
 
-    if request.method == "POST":
-        form = PaseForm(request.POST)
+    if not (TipoPase.objects.filter(inicio_validez__lte=datetime.now()).exists()):
+        mensaje = "No hay pases disponibles"
+        return render(
+            request,
+            "gestion/pases.html",
+            {"form": PaseForm(), "mensaje": mensaje},
+        )
 
-        if form.is_valid():
-            datos = form.cleaned_data
-            participante = Participante.objects.filter(
-                uuid=datos["participante"]
-            ).first()
+    if request.method == "GET":
+        return render(
+            request,
+            "gestion/pases.html",
+            {"form": PaseForm(), "mensaje": mensaje},
+        )
 
-            if not participante:
-                mensaje = "No existe la acreditación"
-            else:
-                pase = Pase(participante=participante, tipo_pase=actual)
-                pase.save()
-                mensaje = "Pase creado"
+    form = PaseForm(request.POST)
+
+    if form.is_valid():
+        datos = form.cleaned_data
+        participante = Participante.objects.filter(uuid=datos["acreditacion"]).first()
+
+        if not participante:
+            mensaje = "No existe la acreditación"
         else:
-            return HttpResponse("Error")
-
-    if not actual:
-        return HttpResponse("No hay pases activos")
-
-    form = PaseForm(initial={"tipo_pase": actual})
-    return render(
-        request,
-        "gestion/pases.html",
-        {"pase": actual, "form": form, "mensaje": mensaje},
-    )
+            pase = Pase(participante=participante, tipo_pase=datos["tipo_pase"])
+            pase.save()
+            mensaje = "Pase creado"
+    else:
+        return HttpResponse("Error")
 
 
 @require_http_methods(["GET", "POST"])

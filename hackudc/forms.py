@@ -73,17 +73,20 @@ class Registro(forms.Form):
 
 
 class PaseForm(forms.Form):
-    # No funciona siempre el valor inicial. Indicarlo en la vista va bien
-    # tipo_pase = forms.ModelChoiceField(
-    #     queryset=TipoPase.objects.all().order_by("inicio_validez"),
-    #     initial=TipoPase.objects.filter(inicio_validez__lte=datetime.now())
-    #     .order_by("inicio_validez")
-    #     .last(),
-    # )
     tipo_pase = forms.ModelChoiceField(
         queryset=TipoPase.objects.all().order_by("inicio_validez")
     )
-    participante = forms.CharField(label="Acreditación", max_length=6)
+    acreditacion = forms.CharField(label="Acreditación", max_length=6)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        actual = (
+            TipoPase.objects.filter(inicio_validez__lte=datetime.now())
+            .order_by("-inicio_validez")
+            .first()
+        )
+        if actual:
+            self.fields["tipo_pase"].initial = actual
 
 
 class PresenciaForm(forms.Form):

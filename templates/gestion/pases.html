@@ -4,7 +4,9 @@
 {% endif %}
 
 <h2>Actual</h2>
+{% with pase=form.fields.tipo_pase.initial %}
 {{ pase.id_tipo_pase }} - {{ pase.nombre }}, desde {{ pase.inicio_validez }}
+{% endwith %}
 
 <h2>Añadir</h2>
 <form action="{% url 'pases' %}" method="post">
