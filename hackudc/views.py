@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_not_required
 
 from hackudc.forms import ParticipanteForm, Registro, PaseForm, PresenciaForm
-from hackudc.models import Participante, Pase, Presencia, TipoPase
+from hackudc.models import Participante, Pase, Persona, Presencia, TipoPase
 
 
 @login_not_required
@@ -100,10 +100,10 @@ def pases(request: HttpRequest):
 
     if form.is_valid():
         datos = form.cleaned_data
-        participante = Participante.objects.filter(uuid=datos["acreditacion"]).first()
+        persona = Persona.objects.get(uuid=datos["acreditacion"])
 
-        if participante:
-            pase = Pase(participante=participante, tipo_pase=datos["tipo_pase"])
+        if persona:
+            pase = Pase(persona=persona, tipo_pase=datos["tipo_pase"])
             pase.save()
             messages.success(request, f"Pase creado")
         else:
