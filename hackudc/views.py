@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_not_required
 
 from hackudc.forms import ParticipanteForm, Registro, PaseForm, PresenciaForm
-from hackudc.models import Participante, Pase, Persona, Presencia, TipoPase
+from hackudc.models import Mentor, Participante, Pase, Persona, Presencia, TipoPase
 
 
 @login_not_required
@@ -25,7 +25,6 @@ def registro(request: HttpRequest):
         return render(request, "registro.html", {"form": form})
 
 
-# /gestion/
 def gestion(request: HttpRequest):
     return render(request, "gestion/index.html")
 
@@ -39,48 +38,46 @@ def alta(request: HttpRequest):
     2. Petición post con el correo del participante. Devuelve los datos
     3. Petición post con el participante y la acreditación. Se asigna en la base de datos
     """
-    form = Registro
-
-    # 2 y 3. Post con el formulario
-    if request.method == "POST":
-        form = Registro(request.POST)
-
-        if form.is_valid():
-            datos = form.cleaned_data
-            participante = Participante.objects.filter(correo=datos["persona"]).first()
-
-            # Gestión de errores
-            # Volver a la página original mostrando el mensaje de error
-            if not participante:
-                return HttpResponse("No se encontró el participante")
-            elif not participante.aceptado:
-                return HttpResponse("Participante no aceptado")
-            elif participante.uuid:
-                return HttpResponse("Ya registrado")
-
-            # 2. Petición solo con el correo
-            # Mostrar los datos y el formulario precompletado con el correo
-            if not datos["acreditacion"]:
-                return render(
-                    request,
-                    "gestion/registro.html",
-                    {
-                        "form": form,
-                        "mensaje": f"{participante.nombre} - {participante.talla_camiseta}",
-                    },
-                )
-
-            # 3. Petición completa
-            # Asignar la acreditación. Página de éxito con timeout y volver a la original
-            participante.uuid = datos["acreditacion"]
-            participante.save()
-
-            return HttpResponse(
-                f"Asignada acreditación <b>{participante.uuid}</b> a <b>{participante.correo}</b>"
-            )
-
     # 1. Formulario de registro vacío
-    return render(request, "gestion/registro.html", {"form": form})
+    if request.method == "GET":
+        return render(request, "gestion/registro.html", {"form": Registro()})
+
+    form = Registro(request.POST)
+
+    if form.is_valid():
+        datos = form.cleaned_data
+
+        persona = Participante.objects.filter(correo=datos["correo"]).first()
+        if not persona:
+            persona = Mentor.objects.get(correo=datos["correo"])
+        if not persona:
+            messages.error(request, "No se encontró el participante")
+            return redirect("alta")
+
+        if not persona.aceptado:
+            messages.error(request, "El participante no ha sido aceptado")
+            return redirect("alta")
+
+        if persona.uuid:
+            messages.error(request, "El participante ya está registrado")
+            return redirect("alta")
+
+        # 2. Petición solo con el correo
+        # Mostrar los datos y el formulario precompletado con el correo
+        if not datos["acreditacion"]:
+            messages.info(request, f"{persona.nombre} - {persona.talla_camiseta}")
+            return redirect("alta")
+
+        # 3. Petición completa
+        # Asignar la acreditación. Página de éxito con timeout y volver a la original
+        persona.uuid = datos["acreditacion"]
+        persona.save()
+
+        messages.success(
+            request,
+            f"Asignada acreditación {persona.uuid} a {persona.correo}",
+        )
+        return redirect("alta")
 
 
 @require_http_methods(["GET", "POST"])

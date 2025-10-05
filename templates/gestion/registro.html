@@ -5,9 +5,7 @@
 
 {% block content %}
 <h1>Registro</h1>
-{% if mensaje %}
-    <p style="color: red; font-weight: bold;">{{ mensaje }}</p>
-{% endif %}
+
 <form action="{% url 'alta' %}" method="post">
     {% csrf_token %}
     {{ form }}
