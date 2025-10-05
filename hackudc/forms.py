@@ -80,13 +80,11 @@ class PaseForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        actual = (
+        self.fields["tipo_pase"].initial = (
             TipoPase.objects.filter(inicio_validez__lte=datetime.now())
             .order_by("-inicio_validez")
             .first()
         )
-        if actual:
-            self.fields["tipo_pase"].initial = actual
 
 
 class PresenciaForm(forms.Form):
