@@ -5,8 +5,8 @@ from hackudc.models import *
 
 
 def aceptar_participante(modeladmin, request, queryset):
-    ya_aceptados = sum(1 for _ in queryset.filter(aceptado=True))
-    actualizados = queryset.update(aceptado=True) - ya_aceptados
+    ya_aceptados = queryset.filter(aceptado=True).count()
+    actualizados = queryset.filter(aceptado=False).update(aceptado=True)
 
     if ya_aceptados:
         modeladmin.message_user(
