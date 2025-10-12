@@ -99,7 +99,7 @@ def pases(request: HttpRequest):
 
     if form.is_valid():
         datos = form.cleaned_data
-        persona = Persona.objects.get(acreditacion=datos["acreditacion"])
+        persona = Persona.objects.filter(acreditacion=datos["acreditacion"]).first()
 
         if persona:
             pase = Pase(persona=persona, tipo_pase=datos["tipo_pase"])
