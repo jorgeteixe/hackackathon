@@ -1,21 +1,20 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
+    {% load static %}
 
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock title %} | HackUDC</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Akaya+Kanada&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
             rel="stylesheet">
 
-        <link rel="stylesheet" href="{% static 'style.css' %}">
-
         <link rel="shotcut icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <title>{% block title %}{% endblock title %} | HackUDC</title>
 
         {% block head %}{% endblock head %}
     </head>
@@ -30,6 +29,16 @@
         <div id="content">
             {% block content %}
             {% endblock content %}
+        </div>
+
+        <div id="footer">
+            <div class="footer-content">
+                <p>
+                    Desarrollado por
+                    <br>
+                    <a href="https://gpul.org?utm_source=login-mentores" target="_blank">GPUL</a>
+                </p>
+            </div>
         </div>
     </body>
 

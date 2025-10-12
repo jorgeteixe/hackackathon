@@ -1,14 +1,15 @@
 {% extends 'marco.html' %}
-{% load static %}
 
 {% block title %}Registro{% endblock title %}
 
 {% block content %}
-<h1>Registro</h1>
+<div id="gestion-registro">
+    <h1>Registro</h1>
 
-<form action="{% url 'alta' %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+    <form action="{% url 'alta' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
 {% endblock content %}

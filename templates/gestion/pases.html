@@ -3,17 +3,19 @@
 {% block title %}Pases{% endblock %}
 
 {% block content %}
-<h1>Pases</h1>
+<div id="gestion-pases">
+    <h1>Pases</h1>
 
-<h2>Actual</h2>
-{% with pase=form.fields.tipo_pase.initial %}{% if pase %}
-{{ pase.id_tipo_pase }} - {{ pase.nombre }}, desde {{ pase.inicio_validez }}
-{% endif %}{% endwith %}
+    <h2>Actual</h2>
+    {% with pase=form.fields.tipo_pase.initial %}{% if pase %}
+    {{ pase.id_tipo_pase }} - {{ pase.nombre }}, desde {{ pase.inicio_validez }}
+    {% endif %}{% endwith %}
 
-<h2>Añadir</h2>
-<form action="{% url 'pases' %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+    <h2>Añadir</h2>
+    <form action="{% url 'pases' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
 {% endblock content %}
