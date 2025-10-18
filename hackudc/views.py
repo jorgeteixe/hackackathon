@@ -52,7 +52,7 @@ def alta(request: HttpRequest):
             messages.error(request, "No se encontró el participante")
             return redirect("alta")
 
-        if not persona.aceptado:
+        if persona.fecha_aceptacion is None:
             messages.error(request, "El participante no ha sido aceptado")
             return redirect("alta")
 

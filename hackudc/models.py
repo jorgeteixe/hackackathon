@@ -80,7 +80,12 @@ class Persona(PersonaAbstracta):
         validators=[FileExtensionValidator(["pdf"]), validador_pdf],
     )
     compartir_cv = models.BooleanField(default=False)
-    aceptado = models.BooleanField(default=False)
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+    fecha_verificacion_correo = models.DateTimeField(
+        null=True, blank=True, default=None
+    )
+    fecha_aceptacion = models.DateTimeField(null=True, blank=True, default=None)
+    fecha_confirmacion_plaza = models.DateTimeField(null=True, blank=True, default=None)
 
 
 class Mentor(Persona):
@@ -118,7 +123,7 @@ class Participante(Persona):
         verbose_name_plural = "Participantes"
 
     def __str__(self):
-        return f"{self.nombre} ({'No aceptado' if not self.aceptado else 'Aceptado'})"
+        return f"{self.nombre} ({'No aceptado' if not self.fecha_aceptacion else 'Aceptado'})"
 
 
 class RestriccionAlimentaria(models.Model):
