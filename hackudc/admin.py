@@ -32,6 +32,46 @@ def aceptar_participante(modeladmin, request, queryset):
         modeladmin.message_user(request, "No se ha aceptado a ningún participante.")
 
 
+class EstadoParticipanteListFilter(admin.SimpleListFilter):
+    title = "Estado"
+    parameter_name = "estado"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("registrado", "Registrado (sin verificar correo)"),
+            ("verificado", "Correo verificado"),
+            ("aceptado", "Aceptado"),
+            ("confirmado", "Plaza confirmada"),
+        ]
+
+    def queryset(self, request, queryset):
+        match self.value():
+            case "registrado":
+                return queryset.filter(
+                    fecha_verificacion_correo=None,
+                    fecha_aceptacion=None,
+                    fecha_confirmacion_plaza=None,
+                )
+            case "verificado":
+                return queryset.filter(
+                    fecha_aceptacion=None,
+                    fecha_confirmacion_plaza=None,
+                ).exclude(fecha_verificacion_correo=None)
+            case "aceptado":
+                return queryset.filter(
+                    fecha_confirmacion_plaza=None,
+                ).exclude(
+                    fecha_aceptacion=None,
+                    fecha_verificacion_correo=None,
+                )
+            case "confirmado":
+                return queryset.exclude(
+                    fecha_verificacion_correo=None,
+                    fecha_aceptacion=None,
+                    fecha_confirmacion_plaza=None,
+                )
+
+
 class ParticipanteAdmin(admin.ModelAdmin):
     list_display = [
         "correo",
@@ -45,7 +85,7 @@ class ParticipanteAdmin(admin.ModelAdmin):
         "aceptado",
         "confirmado",
     ]
-    list_filter = ["fecha_aceptacion", "centro_estudio", "ciudad"]
+    list_filter = [EstadoParticipanteListFilter, "centro_estudio", "ciudad"]
     actions = [aceptar_participante]
 
 
