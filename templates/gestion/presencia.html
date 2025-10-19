@@ -17,10 +17,10 @@
     <h2>{{ persona.nombre }} ({{ persona.acreditacion }})</h2>
     <p>Tiempo total: {{ tiempo_total }}</p>
     <br>
-    <a href="{% url 'presencia' %}">Nueva búsqueda</a>
-    <br>
-    <a href="{% url 'presencia-entrada' acreditacion=persona.acreditacion %}">Entrada</a>
-    <a href="{% url 'presencia-salida' acreditacion=persona.acreditacion %}">Salida</a>
+    <div class="botones">
+        <a href="{% url 'presencia-entrada' acreditacion=persona.acreditacion %}">Entrada</a>
+        <a href="{% url 'presencia-salida' acreditacion=persona.acreditacion %}">Salida</a>
+    </div>
     <h3>Historial</h3>
     <ul>
         {% for presencia in presencias %}
@@ -53,6 +53,11 @@
         <li>No hay registros de presencia.</li>
         {% endfor %}
     </ul>
+
+    <br>
+    <div class="botones">
+        <a href="{% url 'presencia' %}">Nueva búsqueda</a>
+    </div>
 
     {% endif %}
 </div>
