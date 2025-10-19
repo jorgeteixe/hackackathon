@@ -155,9 +155,12 @@ p.warning {
 /* Gestión presencia */
 
 #gestion-presencia div.botones {
-    text-align: center;
-    margin: 0 auto;
     margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5em;
 }
 
 #gestion-presencia div.botones a {
