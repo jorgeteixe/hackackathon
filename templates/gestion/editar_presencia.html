@@ -6,7 +6,8 @@
 <div id="gestion-presencia-editar">
     <h1>Editar Presencia</h1>
 
-    <form action="{% url 'presencia-editar' id_presencia=presencia.id_presencia %}">
+    <form action="{% url 'presencia-editar' id_presencia=presencia.id_presencia %}" method="post">
+        {% csrf_token %}
         {{ form }}
         <button type="submit">Guardar</button>
     </form>
