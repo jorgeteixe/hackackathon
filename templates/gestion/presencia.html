@@ -25,15 +25,19 @@
     <ul>
         {% for presencia in presencias %}
         <li>
-            {{ presencia.entrada|date:'d M Y \a \l\a\s H:i' }} -
-
+            {% if presencia.entrada %}
+            {{ presencia.entrada|date:'d M Y \a \l\a\s H:i' }}
+            {% else %}
+            <strong>Sin entrada</strong>
+            {% endif %}
+            -
             {% if presencia.salida %}
             {{ presencia.salida|date:'d M Y \a \l\a\s H:i' }} ({{ presencia.salida|timeuntil:presencia.entrada }})
             {% else %}
             <strong>Sin salida</strong>
             {% endif %}
 
-            {% if presencia.entrada == presencia.salida or not presencia.salida %}
+            {% if not presencia.entrada or not presencia.salida %}
             <a href="{% url 'presencia-editar' id_presencia=presencia.id_presencia %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

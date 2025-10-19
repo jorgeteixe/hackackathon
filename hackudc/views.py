@@ -181,16 +181,11 @@ def presencia_salida(request: HttpRequest, acreditacion: str):
 
     if not ultima:
         messages.error(request, "No había ninguna entrada")
-
-        ultima = Presencia(persona=persona, entrada=datetime.now())
-
-    if ultima.salida:
+    elif ultima.salida:
         messages.warning(request, "La última presencia ya tiene salida registrada")
 
-        ultima = Presencia(persona=persona, entrada=datetime.now())
-
     # Guardar salida
-    ultima.salida = datetime.now()
+    ultima = Presencia(persona=persona, salida=datetime.now())
     ultima.save()
 
 

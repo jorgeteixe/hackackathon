@@ -67,6 +67,17 @@ div#footer a {
     }
 }
 
+/* GENERAL */
+
+p.warning {
+    border: 2px solid #ff88007f;
+    border-radius: 0.5rem;
+    background-color: #ff88003a;
+    color: #eee;
+    font-weight: bold;
+    text-align: center;
+}
+
 
 /* LOGIN */
 

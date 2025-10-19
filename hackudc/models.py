@@ -166,7 +166,7 @@ class Presencia(models.Model):
     persona = models.ForeignKey(
         Persona, on_delete=models.CASCADE, related_name="tiempo_acceso"
     )
-    entrada = models.DateTimeField()
+    entrada = models.DateTimeField(null=True, blank=True, default=None)
     salida = models.DateTimeField(null=True, blank=True, default=None)
 
     class Meta:
