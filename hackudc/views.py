@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
-from hackudc.forms import ParticipanteForm, PaseForm, Registro
+from hackudc.forms import EditarPresenciaForm, ParticipanteForm, PaseForm, Registro
 from hackudc.models import Pase, Persona, Presencia, TipoPase
 
 
@@ -193,4 +193,35 @@ def presencia_salida(request: HttpRequest, acreditacion: str):
     ultima.salida = datetime.now()
     ultima.save()
 
-    return redirect("presencia")
+
+@require_http_methods(["GET", "POST"])
+def presencia_editar(request: HttpRequest, id_presencia: str):
+    presencia = Presencia.objects.filter(id_presencia=id_presencia).first()
+    if not presencia:
+        messages.error(request, "No existe la presencia")
+        return redirect("presencia")
+
+    if request.method == "GET":
+        return render(
+            request,
+            "gestion/editar_presencia.html",
+            {"presencia": presencia, "form": EditarPresenciaForm(instance=presencia)},
+        )
+
+    # POST
+    entrada_str = request.POST.get("entrada", "")
+    salida_str = request.POST.get("salida", "")
+
+    try:
+        entrada = datetime.fromisoformat(entrada_str)
+        salida = datetime.fromisoformat(salida_str) if salida_str else None
+
+        presencia.entrada = entrada
+        presencia.salida = salida
+        presencia.save()
+
+        messages.success(request, "Presencia actualizada")
+    except ValueError:
+        messages.error(request, "Formato de fecha/hora incorrecto")
+
+    return redirect("presencia", acreditacion=presencia.persona.acreditacion)

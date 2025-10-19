@@ -129,3 +129,33 @@ div#footer a {
         border: 1px solid #7f7f7f;
     }
 }
+
+/* Gestión presencia */
+
+#gestion-presencia div.botones {
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+
+#gestion-presencia div.botones a {
+    border: 2px solid #f0f0f0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: #f0f0f0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#gestion-presencia div.botones a:hover {
+    background-color: #f0f0f07f;
+    color: #0f0f0f;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#gestion-presencia a {
+    margin-left: 0.5rem;
+
+    text-decoration: none;
+    color: #f0f0f0;
+}

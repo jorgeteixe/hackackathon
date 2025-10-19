@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django import forms
 
-from hackudc.models import Participante, RestriccionAlimentaria, TipoPase
+from hackudc.models import Participante, Presencia, RestriccionAlimentaria, TipoPase
 
 
 class ParticipanteForm(forms.ModelForm):
@@ -73,6 +73,7 @@ class Registro(forms.Form):
     )
 
 
+# Necesario porque se accede a la persona por la acreditación
 class PaseForm(forms.Form):
     tipo_pase = forms.ModelChoiceField(
         queryset=TipoPase.objects.all().order_by("inicio_validez")
@@ -86,3 +87,33 @@ class PaseForm(forms.Form):
             .order_by("-inicio_validez")
             .first()
         )
+
+
+class EditarPresenciaForm(forms.ModelForm):
+    class Meta:
+        model = Presencia
+        fields = ["entrada", "salida"]
+        labels = {
+            "entrada": "Hora de entrada",
+            "salida": "Hora de salida",
+        }
+        widgets = {
+            "entrada": forms.DateTimeInput(
+                attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
+            ),
+            "salida": forms.DateTimeInput(
+                attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if (
+            self.instance
+            and self.instance.entrada
+            and self.instance.entrada != self.instance.salida
+        ):
+            self.fields["entrada"].disabled = True
+
+        if self.instance and self.instance.salida:
+            self.fields["salida"].disabled = True

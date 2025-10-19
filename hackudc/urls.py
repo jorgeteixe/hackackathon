@@ -26,4 +26,9 @@ urlpatterns = [
         views.presencia_salida,
         name="presencia-salida",
     ),
+    path(
+        "gestion/presencia/<id_presencia>/editar",
+        views.presencia_editar,
+        name="presencia-editar",
+    ),
 ]

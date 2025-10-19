@@ -1,0 +1,14 @@
+{% extends "marco.html" %}
+
+{% block title %}Presencia{% endblock title %}
+
+{% block content %}
+<div id="gestion-presencia-editar">
+    <h1>Editar Presencia</h1>
+
+    <form action="{% url 'presencia-editar' id_presencia=presencia.id_presencia %}">
+        {{ form }}
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+{% endblock content %}
