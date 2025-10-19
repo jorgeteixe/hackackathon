@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django import forms
+from django.utils import timezone
 
 from hackudc.models import Participante, Presencia, RestriccionAlimentaria, TipoPase
 
@@ -83,7 +82,7 @@ class PaseForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["tipo_pase"].initial = (
-            TipoPase.objects.filter(inicio_validez__lte=datetime.now())
+            TipoPase.objects.filter(inicio_validez__lte=timezone.now())
             .order_by("-inicio_validez")
             .first()
         )

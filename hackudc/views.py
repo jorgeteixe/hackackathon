@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_not_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -86,7 +87,7 @@ def alta(request: HttpRequest):
 def pases(request: HttpRequest):
     """Pases del evento. Registra un pase y muestra si es la primera vez que ese participante utiliza ese pase"""
 
-    if not (TipoPase.objects.filter(inicio_validez__lte=datetime.now()).exists()):
+    if not (TipoPase.objects.filter(inicio_validez__lte=timezone.now()).exists()):
         messages.error(
             request, "No hay pases disponibles. Crea uno en el panel de administración."
         )
@@ -163,7 +164,7 @@ def presencia_entrada(request: HttpRequest, acreditacion: str):
         messages.warning(request, "No hay salida registrada de la última presencia")
 
     # Guardar entrada
-    entrada = Presencia(persona=persona, entrada=datetime.now())
+    entrada = Presencia(persona=persona, entrada=timezone.now())
     entrada.save()
 
     return redirect("presencia")
@@ -185,7 +186,7 @@ def presencia_salida(request: HttpRequest, acreditacion: str):
         messages.warning(request, "La última presencia ya tiene salida registrada")
 
     # Guardar salida
-    ultima = Presencia(persona=persona, salida=datetime.now())
+    ultima = Presencia(persona=persona, salida=timezone.now())
     ultima.save()
 
 
