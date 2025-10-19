@@ -154,6 +154,10 @@ p.warning {
 
 /* Gestión presencia */
 
+#gestion-presencia li {
+    text-wrap: nowrap;
+}
+
 #gestion-presencia div.botones {
     margin-bottom: 1rem;
 
