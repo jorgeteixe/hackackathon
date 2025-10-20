@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.core.validators import (
@@ -6,6 +8,7 @@ from django.core.validators import (
     MinValueValidator,
 )
 from django.db import models
+from django.utils import timezone
 
 GENEROS = (
     ("HOMBRE", "Hombre"),
@@ -220,3 +223,9 @@ class Token(models.Model):
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     tiempo_validez_minutos = models.PositiveIntegerField()
+
+    @admin.display(boolean=True, ordering="fecha_creacion", description="Válido")
+    def valido(self):
+        return (
+            self.fecha_creacion + timedelta(minutes=self.tiempo_validez_minutos)
+        ) > timezone.now()
