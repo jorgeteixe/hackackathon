@@ -43,7 +43,7 @@ def ruta_cv(instance, filename):
 
 def validador_pdf(value):
     if value.file.content_type != "application/pdf":
-        raise ValidationError("Error message")
+        raise ValidationError("El archivo no es un PDF")
 
 
 class PersonaAbstracta(models.Model):
