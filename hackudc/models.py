@@ -1,4 +1,5 @@
 from datetime import timedelta
+from uuid import uuid4
 
 from django.contrib import admin
 from django.core.exceptions import ValidationError
@@ -216,7 +217,7 @@ class Pase(models.Model):
 
 
 class Token(models.Model):
-    token = models.UUIDField(primary_key=True)
+    token = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     tipo = models.CharField(max_length=50, choices=TIPOS_TOKEN)
     persona = models.ForeignKey(
         Persona, on_delete=models.CASCADE, related_name="tokens"
