@@ -8,10 +8,14 @@
     --borde: #1a1a1a;
     --claro: #242424;
     --texto: #999;
+
+    /* Tamaño máximo */
+    --max-width: 1200px;
 }
 
 html {
     font-family: Nunito, sans-serif, system-ui;
+    font-size: auto;
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
@@ -38,7 +42,7 @@ body {
 }*/
 
 div#content {
-    max-width: min(100% - 1em, 1000px);
+    width: min(calc(100% - 2rem), var(--max-width));
     margin: 0 auto;
 
     margin-bottom: 1rem;
