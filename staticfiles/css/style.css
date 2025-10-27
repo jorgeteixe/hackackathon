@@ -282,8 +282,8 @@ input[type=email],
 input[type=number],
 select,
 textarea {
-    background-color: #181818;
-    border: 2px solid #181818;
+    background-color: var(--claro);
+    border: 2px solid var(--claro);
     outline: none;
     color: var(--texto);
 
