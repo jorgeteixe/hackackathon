@@ -78,11 +78,9 @@ class Patrocinador(PersonaAbstracta):
 
 # Create your models here.
 class Persona(PersonaAbstracta):
-    dni = models.CharField(max_length=9, unique=True, null=True, blank=True)
-    genero = models.CharField(max_length=10, choices=GENEROS, null=True, blank=True)
-    talla_camiseta = models.CharField(
-        max_length=10, choices=TALLAS_CAMISETA, null=True, blank=True
-    )
+    dni = models.CharField(max_length=9, unique=True, null=True)
+    genero = models.CharField(max_length=10, choices=GENEROS, null=True)
+    talla_camiseta = models.CharField(max_length=10, choices=TALLAS_CAMISETA, null=True)
 
     cv = models.FileField(
         upload_to=ruta_cv,
@@ -125,24 +123,21 @@ class Mentor(Persona):
 
 
 class Participante(Persona):
-    telefono = models.CharField(max_length=16, null=True, blank=True)
+    telefono = models.CharField(max_length=16, null=True)
     ano_nacimiento = models.PositiveIntegerField(
         null=True,
-        blank=True,
         validators=[
             MinValueValidator(1970, "El año debe ser mayor o igual a 1970."),
             MaxValueValidator(2015, "El año debe ser menor o igual a 2015."),
         ],
     )
-    nivel_estudio = models.CharField(
-        null=True, blank=True, max_length=128, choices=NIVELES_ESTUDIO
-    )
-    nombre_estudio = models.CharField(max_length=128, null=True, blank=True)
-    centro_estudio = models.CharField(max_length=128, null=True, blank=True)
-    curso = models.CharField(max_length=128, null=True, blank=True)
-    ciudad = models.CharField(max_length=128, null=True, blank=True)
+    nivel_estudio = models.CharField(null=True, max_length=128, choices=NIVELES_ESTUDIO)
+    nombre_estudio = models.CharField(max_length=128, null=True)
+    centro_estudio = models.CharField(max_length=128, null=True)
+    curso = models.CharField(max_length=128, null=True)
+    ciudad = models.CharField(max_length=128, null=True)
     quiere_creditos = models.BooleanField(default=False)
-    motivacion = models.TextField(null=True, blank=True)
+    motivacion = models.TextField(null=True)
 
     class Meta(Persona.Meta):
         verbose_name = "Participante"
