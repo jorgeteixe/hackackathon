@@ -3,7 +3,9 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    initial = True
+    dependencies = [
+        ("hackudc", "0005_alter_token_token"),
+    ]
 
     operations = [
         migrations.RunSQL(
