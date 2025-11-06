@@ -132,6 +132,7 @@ STATICFILES_DIRS = [
 # Media files (User uploaded content)
 # https://docs.djangoproject.com/en/5.1/topics/files/
 MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
 
 # Fixtures (initial data)
 # https://docs.djangoproject.com/en/5.1/topics/db/fixtures/
@@ -157,4 +158,6 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 EMAIL_HOST = "localhost"
 EMAIL_PORT = 8025
 
-DEFAULT_FROM_EMAIL = ("no-reply@gpul.org",)
+# DEFAULT_FROM_EMAIL = ("no-reply@gpul.org",)
+DEFAULT_FROM_EMAIL = "no-reply@gpul.org"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

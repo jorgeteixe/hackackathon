@@ -114,6 +114,9 @@ class Persona(PersonaAbstracta):
     def __str__(self):
         return f"{self.nombre} ({self.correo})"
 
+    class Meta:
+        ordering = ["-fecha_registro"]
+
 
 class Mentor(Persona):
 
