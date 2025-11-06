@@ -230,7 +230,7 @@ class Token(models.Model):
 
     @admin.display(boolean=True, ordering="fecha_creacion", description="Válido")
     def valido(self):
-        return self.fecha_expiracion > timezone.now() and not self.usado
+        return self.fecha_expiracion > timezone.now() and not self.usado()
 
     def __str__(self):
         return f"Token de {self.persona.nombre}"
