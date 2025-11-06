@@ -24,11 +24,11 @@ class ParticipanteForm(forms.ModelForm):
             "centro_estudio",
             "nombre_estudio",
             "curso",
-            # Otros
             "quiere_creditos",
+            # Otros
+            "motivacion",
             "cv",
             "compartir_cv",
-            "motivacion",
             "notas",
         ]
 
