@@ -1,0 +1,16 @@
+{% extends "marco.html" %}
+
+{% block title %}Confirmar plaza{% endblock %}
+
+{% block content %}
+<div id="registro">
+    <h1>Confirmar plaza</h1>
+
+    <p>Confirma ahora tu plaza. Tienes hasta el {{ token.fecha_expiracion }}</p>
+
+    <form action="{% url 'confirmar-plaza' token.token %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar la plaza</button>
+    </form>
+</div>
+{% endblock content %}

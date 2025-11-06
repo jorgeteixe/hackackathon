@@ -5,6 +5,8 @@ from hackudc import views
 
 urlpatterns = [
     path("", views.registro, name="registro"),
+    path("verificar/<token>", views.verificar_correo, name="verificar-correo"),
+    path("confirmar/<token>", views.confirmar_plaza, name="confirmar-plaza"),
     path(
         "login",
         LoginView.as_view(template_name="login.html", next_page="gestion"),
@@ -31,5 +33,4 @@ urlpatterns = [
         views.presencia_editar,
         name="presencia-editar",
     ),
-    path("verificar/<token>", views.verificar_correo, name="verificar-correo"),
 ]

@@ -68,6 +68,90 @@ def registro(request: HttpRequest):
     return render(request, "registro.html", {"form": form})
 
 
+@login_not_required
+@require_http_methods(["GET"])
+def verificar_correo(request: HttpRequest, token: str):
+    token_obj = Token.objects.filter(token=token, tipo="VERIFICACION").first()
+    if not token_obj:
+        messages.error(request, "El token es inválido.")
+        return render(
+            request,
+            "verificacion_incorrecta.html",
+            {"motivo": "Token inválido", "token": token},
+        )
+
+    if not token_obj.valido():
+        messages.error(
+            request,
+            "El token de verificación ha expirado.",
+        )
+        return render(
+            request,
+            "verificacion_incorrecta.html",
+            {"motivo": "Token expirado", "token": token},
+        )
+
+    ahora = timezone.now()
+
+    participante: Participante = Participante.objects.get(
+        correo=token_obj.persona.correo
+    )
+    participante.fecha_verificacion_correo = ahora
+    participante.save()
+
+    token_obj.fecha_uso = ahora
+
+    messages.success(request, "Correo verificado correctamente")
+    return render(request, "verificacion_correcta.html", {"participante": participante})
+
+
+@login_not_required
+@require_http_methods(["GET", "POST"])
+def confirmar_plaza(request: HttpRequest, token: str):
+    token_obj = Token.objects.filter(token=token, tipo="CONFIRMACION").first()
+    if not token_obj:
+        messages.error(request, "Token inválido")
+        return redirect("registro")
+
+    if not token_obj.valido():
+        messages.error(
+            request,
+            "El token de verificación ha expirado. Ponte en contacto con nosotros para confirmar tu plaza a través de hackudc@gpul.org.",
+        )
+        return redirect("registro")
+
+    if request.method == "POST":
+        ahora = timezone.now()
+
+        participante: Participante = Participante.objects.get(
+            correo=token_obj.persona.correo
+        )
+        participante.fecha_confirmacion_plaza = ahora
+        participante.save()
+
+        token_obj.fecha_uso = ahora
+        token_obj.save()
+
+        return HttpResponse("Pues ya estás aceptado")
+
+    # return HttpResponse(
+    #     f"Hola {token}, tienes hasta {token_obj.fecha_expiracion} para confirmar tu plaza"
+    # )
+    # print(type(datetime.now()))
+    # print(datetime.now())
+    # print(type(token_obj.fecha_expiracion))
+    # print(token_obj.fecha_expiracion)
+    # rprint(datetime.now(timezone.utc) - token_obj.fecha_expiracion)
+    return render(
+        request,
+        "confirmar-plaza.html",
+        {
+            "token": token_obj,
+            # "restante": datetime.utcnow() - token_obj.fecha_expiracion,
+        },
+    )
+
+
 def gestion(request: HttpRequest):
     return render(request, "gestion/index.html")
 
@@ -270,39 +354,3 @@ def presencia_editar(request: HttpRequest, id_presencia: str):
         {"presencia": presencia, "form": form},
     )
 
-
-@login_not_required
-@require_http_methods(["GET"])
-def verificar_correo(request: HttpRequest, token: str):
-    token_obj = Token.objects.filter(token=token, tipo="VERIFICACION").first()
-    if not token_obj:
-        messages.error(request, "El token es inválido.")
-        return render(
-            request,
-            "verificacion_incorrecta.html",
-            {"motivo": "Token inválido", "token": token},
-        )
-
-    if not token_obj.valido():
-        messages.error(
-            request,
-            "El token de verificación ha expirado.",
-        )
-        return render(
-            request,
-            "verificacion_incorrecta.html",
-            {"motivo": "Token expirado", "token": token},
-        )
-
-    ahora = timezone.now()
-
-    participante: Participante = Participante.objects.get(
-        correo=token_obj.persona.correo
-    )
-    participante.fecha_verificacion_correo = ahora
-    participante.save()
-
-    token_obj.fecha_uso = ahora
-
-    messages.success(request, "Correo verificado correctamente")
-    return render(request, "verificacion_correcta.html", {"participante": participante})
