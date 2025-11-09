@@ -23,7 +23,7 @@ class Command(BaseCommand):
         fake = Faker("es_ES")
 
         for _ in range(options["cantidad"]):
-            participante = Participante(
+            Participante(
                 correo=fake.email(),
                 nombre=fake.name(),
                 dni=fake.cif(),  # Lo más parecido a un DNI que hay en faker...
@@ -37,6 +37,4 @@ class Command(BaseCommand):
                 quiere_creditos=choice([True, False]),
                 talla_camiseta=choice(["S", "M", "L", "XL"]),
                 compartir_cv=choice([True, False]),
-            )
-
-            Participante.save(participante)
+            ).save()
