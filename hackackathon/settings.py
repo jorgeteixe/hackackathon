@@ -1,9 +1,9 @@
 # Copyright (C) 2025-now  p.fernandezf <p@fernandezf.es> & iago.rivas <delthia@delthia.com>
 
-from datetime import datetime
-from zoneinfo import ZoneInfo
 import os
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from dotenv import load_dotenv
 
@@ -115,6 +115,103 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+
+# Logging
+# https://docs.djangoproject.com/en/5.2/howto/logging/
+LOGFILE_NAME = "log/"
+LOGFILE_SIZE = 10 * 1024**2  # 10 MB
+LOGFILE_COUNT = 2
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "formatters": {
+        "standard": {
+            "format": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        "django.server": {  # manage.py runserver
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        },
+        "django.server": {  # manage.py runserver
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+            "include_html": True,
+        },
+        # Django extra
+        "null": {
+            "class": "logging.NullHandler",
+        },
+        # Custom
+        "file": {
+            "class": "logging.FileHandler",
+            "formatter": "standard",
+            "filename": LOGFILE_NAME + "debug.log",
+        },
+        "file_warning": {
+            "level": "WARNING",
+            "class": "logging.FileHandler",
+            "formatter": "standard",
+            "filename": LOGFILE_NAME + "warning.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "mail_admins"],
+            "level": "INFO",
+        },
+        "django.server": {  # manage.py runserver
+            "handlers": ["django.server"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        # Django extra
+        "django.security.DisallowedHost": {
+            "handlers": ["null"],
+            "propagate": False,
+        },
+        "django.utils.autoreload": {
+            "handlers": ["null"],
+            "propagate": False,
+        },
+        # Custom
+        "": {
+            "level": os.getenv("DJANGO_LOG_LEVEL", "WARNING"),
+            "handlers": ["file_warning"],
+        },
+        "hackackathon": {
+            "level": "DEBUG",
+            "handlers": ["file"],
+        },
+        "gestion": {
+            "level": "DEBUG",
+            "handlers": ["file"],
+        },
+    },
+}
 
 
 # Internationalization
