@@ -2,8 +2,8 @@
 
 from datetime import datetime, timedelta
 
-from django.core.management import BaseCommand
 from django.core.mail import EmailMessage
+from django.core.management import BaseCommand
 from django.template.loader import render_to_string
 from django.utils import timezone
 

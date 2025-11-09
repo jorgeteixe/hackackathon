@@ -5,13 +5,13 @@ from django.utils import timezone
 from django.utils.translation import ngettext
 
 from gestion.models import (
-    Participante,
     Mentor,
-    Patrocinador,
-    RestriccionAlimentaria,
-    Presencia,
-    TipoPase,
+    Participante,
     Pase,
+    Patrocinador,
+    Presencia,
+    RestriccionAlimentaria,
+    TipoPase,
     Token,
 )
 

@@ -1,11 +1,11 @@
 # Copyright (C) 2025-now  p.fernandezf <p@fernandezf.es> & iago.rivas <delthia@delthia.com>
 
-import csv, os
+import csv
+import os
 
 from django.core.management.base import BaseCommand, CommandError
 
 from gestion.models import Participante
-
 
 # email,name,attributes
 # user1@mail.com,"User One","{""age"": 42, ""planet"": ""Mars""}"
