@@ -35,21 +35,11 @@ class ParticipanteForm(forms.ModelForm):
         ]
 
         labels = {
-            "dni": "DNI",
-            "genero": "Género",
             "restricciones_alimentarias": "Restricciones alimentarias",
-            "ano_nacimiento": "Año de nacimiento",
-            "nivel_estudio": "Nivel actual de estudios",
-            "nombre_estudio": "Nombre de los estudios",
-            "centro_estudio": "Centro de estudios",
             "curso": "Curso (si aplica)",
-            "ciudad": "Ciudad de residencia",
             "quiere_creditos": "¿Quieres solicitar créditos?",
-            "talla_camiseta": "Talla de camiseta",
-            "cv": "CV",
             "compartir_cv": "¿Autorizas compartir tu CV con los patrocinadores?",
             "motivacion": "Motivación para participar en el HackUDC",
-            "notas": "Notas",
         }
 
         help_texts = {

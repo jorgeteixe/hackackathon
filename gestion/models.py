@@ -54,7 +54,12 @@ class PersonaAbstracta(models.Model):
     nombre = models.CharField(max_length=100)
     notas = models.TextField(null=True, blank=True)
     acreditacion = models.CharField(
-        max_length=8, unique=True, null=True, blank=True, default=None
+        max_length=8,
+        unique=True,
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name="Acreditación",
     )
 
     restricciones_alimentarias = models.ManyToManyField(
@@ -80,22 +85,44 @@ class Patrocinador(PersonaAbstracta):
 
 # Create your models here.
 class Persona(PersonaAbstracta):
-    dni = models.CharField(max_length=9, unique=True, null=True)
-    genero = models.CharField(max_length=10, choices=GENEROS, null=True)
-    talla_camiseta = models.CharField(max_length=10, choices=TALLAS_CAMISETA, null=True)
+    dni = models.CharField(max_length=9, unique=True, null=True, verbose_name="DNI")
+    genero = models.CharField(
+        max_length=10, choices=GENEROS, null=True, verbose_name="Género"
+    )
+    talla_camiseta = models.CharField(
+        max_length=10,
+        choices=TALLAS_CAMISETA,
+        null=True,
+        verbose_name="Talla de la camiseta",
+    )
 
     cv = models.FileField(
         upload_to=ruta_cv,
         null=True,
         validators=[FileExtensionValidator(["pdf"]), validador_pdf],
+        verbose_name="CV",
     )
-    compartir_cv = models.BooleanField(default=False)
-    fecha_registro = models.DateTimeField(auto_now_add=True)
+    compartir_cv = models.BooleanField(
+        default=False, verbose_name="Autoriza a compartir el CV"
+    )
+    fecha_registro = models.DateTimeField(
+        auto_now_add=True, verbose_name="Fecha de registro"
+    )
     fecha_verificacion_correo = models.DateTimeField(
-        null=True, blank=True, default=None
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name="Fecha de verificación del correo",
     )
-    fecha_aceptacion = models.DateTimeField(null=True, blank=True, default=None)
-    fecha_confirmacion_plaza = models.DateTimeField(null=True, blank=True, default=None)
+    fecha_aceptacion = models.DateTimeField(
+        null=True, blank=True, default=None, verbose_name="Fecha de aceptación"
+    )
+    fecha_confirmacion_plaza = models.DateTimeField(
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name="Fecha de confirmación de la plaza",
+    )
 
     @admin.display(
         boolean=True, ordering="fecha_verificacion_correo", description="Verificado"
@@ -131,21 +158,35 @@ class Mentor(Persona):
 
 
 class Participante(Persona):
-    telefono = models.CharField(max_length=16, null=True)
+    telefono = models.CharField(max_length=16, null=True, verbose_name="Teléfono")
     ano_nacimiento = models.PositiveIntegerField(
         null=True,
         validators=[
             MinValueValidator(1970, "El año debe ser mayor o igual a 1970."),
             MaxValueValidator(2015, "El año debe ser menor o igual a 2015."),
         ],
+        verbose_name="Año de nacimiento",
     )
-    nivel_estudio = models.CharField(null=True, max_length=128, choices=NIVELES_ESTUDIO)
-    nombre_estudio = models.CharField(max_length=128, null=True)
-    centro_estudio = models.CharField(max_length=128, null=True)
-    curso = models.CharField(max_length=128, null=True)
-    ciudad = models.CharField(max_length=128, null=True)
-    quiere_creditos = models.BooleanField(default=False)
-    motivacion = models.TextField(null=True)
+    nivel_estudio = models.CharField(
+        null=True,
+        max_length=128,
+        choices=NIVELES_ESTUDIO,
+        verbose_name="Nivel actual de estudios",
+    )
+    nombre_estudio = models.CharField(
+        max_length=128, null=True, verbose_name="Nombre de los estudios"
+    )
+    centro_estudio = models.CharField(
+        max_length=128, null=True, verbose_name="Centro de estudios"
+    )
+    curso = models.CharField(max_length=128, null=True, verbose_name="Curso actual")
+    ciudad = models.CharField(
+        max_length=128, null=True, verbose_name="Ciudad de residencia"
+    )
+    quiere_creditos = models.BooleanField(
+        default=False, verbose_name="Quiere créditos?"
+    )
+    motivacion = models.TextField(null=True, verbose_name="Motivación")
 
     class Meta(Persona.Meta):
         verbose_name = "Participante"
@@ -198,7 +239,7 @@ class Presencia(models.Model):
 class TipoPase(models.Model):
     id_tipo_pase = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, unique=True)
-    inicio_validez = models.DateTimeField()
+    inicio_validez = models.DateTimeField(verbose_name="Inicio de la validez")
 
     class Meta:
         verbose_name = "Tipo de Pase"
@@ -213,7 +254,10 @@ class Pase(models.Model):
     id_pase = models.AutoField(primary_key=True)
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name="pases")
     tipo_pase = models.ForeignKey(
-        TipoPase, on_delete=models.CASCADE, related_name="pases"
+        TipoPase,
+        on_delete=models.CASCADE,
+        related_name="pases",
+        verbose_name="Tipo de pase",
     )
     fecha = models.DateTimeField(auto_now_add=True)
 
@@ -234,9 +278,15 @@ class Token(models.Model):
     persona = models.ForeignKey(
         Persona, on_delete=models.CASCADE, related_name="tokens"
     )
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_expiracion = models.DateTimeField(null=False)
-    fecha_uso = models.DateTimeField(null=True, blank=True, default=None)
+    fecha_creacion = models.DateTimeField(
+        auto_now_add=True, verbose_name="Fecha de creación"
+    )
+    fecha_expiracion = models.DateTimeField(
+        null=False, verbose_name="Fecha de expiración"
+    )
+    fecha_uso = models.DateTimeField(
+        null=True, blank=True, default=None, verbose_name="Fecha de uso"
+    )
 
     @admin.display(boolean=True, ordering="fecha_creacion", description="Usado")
     def usado(self):
@@ -247,4 +297,4 @@ class Token(models.Model):
         return self.fecha_expiracion > timezone.now() and not self.usado()
 
     def __str__(self):
-        return f"Token de {self.persona.nombre}"
+        return f"Token de {self.tipo.capitalize()} de {self.persona.nombre}"
