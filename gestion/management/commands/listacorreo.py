@@ -1,11 +1,14 @@
 # Copyright (C) 2025-now  p.fernandezf <p@fernandezf.es> & iago.rivas <delthia@delthia.com>
 
-import csv
-import os
+import csv, os, logging
 
 from django.core.management.base import BaseCommand, CommandError
 
 from gestion.models import Participante
+
+
+logger = logging.getLogger(__name__)
+
 
 # email,name,attributes
 # user1@mail.com,"User One","{""age"": 42, ""planet"": ""Mars""}"
@@ -65,6 +68,10 @@ class Command(BaseCommand):
                 self.style.ERROR("Error encontrado mientras se escribía el CSV!")
             )
             raise e
+
+        logger.info(
+            f"CSV para listmonk exportado con {participantes.count()} participantes"
+        )
 
         self.stdout.write(
             self.style.SUCCESS(
