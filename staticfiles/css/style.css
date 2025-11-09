@@ -38,6 +38,10 @@ body {
     min-height: 100vh;
 }
 
+a {
+    color: var(--amarillo-hackudc);
+}
+
 /*div#content {
     margin: 0 auto;
     margin-bottom: 2rem;
@@ -266,7 +270,7 @@ div.message.message-error {
     padding: 1em;
 
     background-color: var(--fondo);
-    /* backdrop-filter: blur(16px); */
+    margin: 0 4em;
 }
 
 
@@ -293,26 +297,22 @@ div:has(> #id_compartir_cv),
 div:has(> #id_cv),
 div:has(> #id_motivacion),
 div:has(> #id_notas),
+div:has(> #terminos),
 form hr {
     width: 100%;
     max-width: 95%;
 
     margin: 2em 0;
-
-    /* background-color: green; */
 }
 
-/* div:has(> #id_quiere_creditos) { */
-div:has(> input[type=checkbox]) {
-    /* flex-direction: row; */
-    flex-wrap: wrap-reverse;
-    align-items: start;
-    justify-content: space-between;
-    max-height: 3.5em;
+div:has(> #id_quiere_creditos) {
+    flex-direction: row;
+    margin: 1em 0;
 }
 
-/* div:has(> #id_quiere_creditos) :nth-child(1) {
+div:has(> #id_quiere_creditos) :nth-child(1) {
     order: 2;
+    margin-right: 0.5em;
 }
 
 div:has(> #id_quiere_creditos) :nth-child(2) {
@@ -321,11 +321,14 @@ div:has(> #id_quiere_creditos) :nth-child(2) {
 
 div:has(> #id_quiere_creditos) :nth-child(3) {
     order: 1;
-    height: 3.5em;
-} */
+    margin-right: 0.5em;
+}
 
-div:has(> #id_quiere_creditos) :nth-child(3) {
-    height: 3.5em;
+#id_cv_helptext {
+    width: 100%;
+    max-width: 95%;
+    margin-top: 0;
+    margin-bottom: 0.5em;
 }
 
 div:has(> #id_compartir_cv),
@@ -333,36 +336,16 @@ div:has(> #id_cv) {
     margin: 0.5em 0;
 }
 
-div:has(> #id_compartir_cv) {
+div:has(> #id_compartir_cv),
+div:has(> #terminos) {
     flex-direction: row-reverse;
     justify-content: left;
 }
 
-#id_compartir_cv {
+#id_compartir_cv,
+#terminos {
     align-self: center;
-    margin-right: 1em;
-}
-
-form>button {
-    padding: 8px 16px;
-
-    background-color: var(--amarillo-hackudc);
-    border: none;
-    /* border-radius: 0.5em; */
-    border-radius: 1px;
-    box-shadow: 4px 4px 0px var(--sombra-hackudc);
-
-    font-weight: bold;
-    color: var(--sombra-hackudc);
-
-    cursor: pointer;
-
-    transition-duration: 125ms;
-}
-
-form>button:hover {
-    box-shadow: 1px 1px 0px var(--sombra-hackudc);
-    transform: translate(3px, 3px);
+    margin-right: 0.5em;
 }
 
 form label:has(~ input:required):after,
@@ -370,6 +353,12 @@ form label:has(~ select:required):after,
 form label:has(~ textarea:required):after {
     content: ' *';
     color: red;
+}
+
+input,
+select,
+textarea {
+    font-size: 1em;
 }
 
 fieldset div {
@@ -426,4 +415,33 @@ fieldset>div {
 #id_notas_helptext {
     font-style: italic;
     font-size: 80%;
+}
+
+#submit-ancho {
+    background-color: var(--amarillo-hackudc);
+    color: var(--sombra-hackudc);
+    border: none;
+    border-radius: 8px;
+
+    width: 95%;
+    padding: 12px;
+
+    font-size: 1em;
+    cursor: pointer;
+
+    position: relative;
+}
+
+#flecha-submit {
+    width: 1em;
+    height: 1em;
+    position: absolute;
+    right: 1em;
+    top: 0;
+    transform: translateY(35%);
+    transition-duration: 200ms;
+}
+
+#submit-ancho:hover #flecha-submit {
+    right: 0.75em;
 }
