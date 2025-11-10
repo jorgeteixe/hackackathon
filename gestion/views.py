@@ -27,9 +27,6 @@ from gestion.models import (
     Token,
 )
 
-EMAIL_VERIFICACION_ASUNTO = "HackUDC 2026 - Confirma tu correo ✉️"
-EMAIL_CONFIRMACION_ASUNTO = "HackUDC 2026 - Confirma tu plaza! <emoji>"
-
 
 @login_not_required
 @require_http_methods(["GET", "POST"])
@@ -56,7 +53,7 @@ def registro(request: HttpRequest):
                 "host": request.get_host(),
             }
             email = EmailMultiAlternatives(
-                EMAIL_VERIFICACION_ASUNTO,
+                settings.EMAIL_VERIFICACION_ASUNTO,
                 render_to_string("correo/verificacion_correo.txt", params),
                 to=(participante.correo,),
                 reply_to=("info@gpul.org",),

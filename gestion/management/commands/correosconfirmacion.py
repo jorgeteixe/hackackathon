@@ -2,8 +2,9 @@
 
 from datetime import datetime, timedelta
 
-from django.core.mail import EmailMessage
-from django.core.management import BaseCommand
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.core.management import BaseCommand, CommandError
 from django.template.loader import render_to_string
 from django.utils import timezone
 
@@ -15,18 +16,56 @@ class Command(BaseCommand):
         "Envía un correo de confirmación a los participantes aceptados no confirmados"
     )
 
+    def add_arguments(self, parser):
+        grupo_fecha_expiracion = parser.add_mutually_exclusive_group()
+        grupo_fecha_expiracion.add_argument(
+            "-d",
+            "--dias",
+            help="Días de duración del token. (default=14)",
+            type=int,
+            default=14,
+        )
+        grupo_fecha_expiracion.add_argument(
+            "-e",
+            "--expiracion",
+            help="Fecha de expiración para todos los tokens. Formato ISO 8601.",
+        )
+
     def handle(self, *args, **options):
+        dias = options.get("dias")
+        expiracion = options.get("expiracion")
+        if expiracion:
+            fecha_expiracion = datetime.fromisoformat(expiracion).astimezone(
+                timezone.get_current_timezone()
+            )
+        else:
+            fecha_expiracion = timezone.now() + timedelta(days=dias)
+
+        if fecha_expiracion < timezone.now():
+            raise ValueError("La fecha de expiración es anterior a este instante")
+
+        # Participantes aceptados pero sin confirmar la plaza
         participantes = Participante.objects.filter(
             fecha_aceptacion__isnull=False,
             fecha_confirmacion_plaza__isnull=True,
             fecha_rechazo_plaza__isnull=True,
         )
 
+        participantes_con_token = Token.objects.filter(
+            tipo="CONFIRMACION", persona__in=participantes
+        )
+        if participantes_con_token.exists():
+            self.stdout.write(
+                self.style.ERROR(
+                    f"{participantes_con_token.count()} participantes ya tenían un token de confirmación"
+                )
+            )
+
         for participante in participantes:
             token = Token(
                 tipo="CONFIRMACION",
                 persona=participante,
-                fecha_expiracion=timezone.now() + timedelta(days=14),
+                fecha_expiracion=fecha_expiracion,
             )
             token.save()
 
@@ -34,16 +73,21 @@ class Command(BaseCommand):
                 params = {
                     "nombre": participante.nombre,
                     "token": token.token,
-                    "host": "127.0.0.1:8000",
+                    "expiracion": fecha_expiracion,
+                    "host": settings.HOST_REGISTRO,
                 }
-                email = EmailMessage(
-                    "PLAZA",
+                email = EmailMultiAlternatives(
+                    settings.EMAIL_CONFIRMACION_ASUNTO,
                     render_to_string("correo/confirmacion_plaza.txt", params),
                     to=(participante.correo,),
                     reply_to=("info@gpul.org",),
                     headers={
                         "Message-ID": f"hackudc-{token.fecha_creacion.timestamp()}"
                     },
+                )
+                email.attach_alternative(
+                    render_to_string("correo/confirmacion_plaza.html", params),
+                    "text/html",
                 )
                 email.send(fail_silently=False)
             except ConnectionRefusedError:

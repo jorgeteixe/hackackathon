@@ -15,7 +15,9 @@ Después de clonar el repositorio, sigue estos pasos para iniciar el desarrollo:
    `python manage.py loadddata restriccion_alimentaria`
 5. Crea un superusuario: \
    `python manage.py createsuperuser` (puedes dejar el correo en blanco)
-6. (Opcional) Generar Participantes de ejemplo:\
+6. Crea los grupos base y asigna los permisos:
+   `python manage.py crear_permisos_grupos`
+7. (Opcional) Generar Participantes de ejemplo:\
    `python manage.py fakeuserdata <cantidad>`
 
 ## Diagrama Entidad-Relación de los modelos

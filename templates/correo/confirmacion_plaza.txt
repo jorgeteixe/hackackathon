@@ -1,3 +1,7 @@
-Hola {{ nombre }}. Tu token de inicio de sesión es: {{ token }}
+Hola {{ nombre }}.
 
-Puedes confirmar tu plaza haciendo clic en el siguiente enlace: https://{{ host }}/confirmar/{{ token }}
+Puedes aceptar la plaza haciendo clic en el siguiente enlace:
+https://{{ host }}/confirmar/{{ token }}
+
+Tienes hasta el {{ expiracion|date:'d M Y \a \l\a\s H:i' }} para aceptarla.
+Fuera de ese plazo no podremos garantizártela.
