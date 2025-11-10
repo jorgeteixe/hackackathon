@@ -10,10 +10,30 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+# Configuración añadida específica ------------------------------------
+# Host de la web general del evento
+HOST_LANDING = os.getenv("HOST_LANDING")
+# Host de la web del registro (esta)
+HOST_REGISTRO = os.getenv("HOST_REGISTRO")
 
-# Fin plazo registro
-PLAZO_REGISTRO = "2025-12-31 23:59:59+01:00"
+# Inicio del evento
+FECHA_INICIO_EVENTO = os.getenv("FECHA_INICIO_EVENTO")
+# Fin del evento
+FECHA_FIN_EVENTO = os.getenv("FECHA_FIN_EVENTO")
+# Fin del plazo de registro
+FECHA_FIN_REGISTRO = os.getenv("FECHA_FIN_REGISTRO")
+
+# Nombre y mail del administrador
+NOMBRE_ADMIN = os.getenv("NOMBRE_ADMIN")
+MAIL_ADMIN = os.getenv("MAIL_ADMIN")
+
+# Asuntos de los correos
+EMAIL_VERIFICACION_ASUNTO = "HackUDC 2026 - Confirma tu correo ✉️"
+EMAIL_CONFIRMACION_ASUNTO = "HackUDC 2026 - Confirma tu plaza! <emoji>"
+# ---------------------------------------------------------------------
+
+
+# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -25,14 +45,14 @@ SECRET_KEY_FALLBACKS = [
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [HOST_REGISTRO]
 
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 
-# CSRF_TRUSTED_ORIGINS = [
-#     "https://admin.hackudc.gpul.org",
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://" + HOST_REGISTRO,
+]
 
 # Application definition
 
@@ -159,6 +179,10 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 # https://docs.djangoproject.com/en/5.1/topics/email/
 EMAIL_HOST = "localhost"
 EMAIL_PORT = 8025
+
+ADMINS = [
+    (NOMBRE_ADMIN, MAIL_ADMIN),
+]
 
 # DEFAULT_FROM_EMAIL = ("no-reply@gpul.org",)
 DEFAULT_FROM_EMAIL = "no-reply@gpul.org"
