@@ -267,7 +267,9 @@ class TokenAdmin(admin.ModelAdmin):
     ]
 
     search_fields = [
-        "persona",
+        "persona__nombre",
+        "persona__correo",
+        "token",
     ]
 
 
