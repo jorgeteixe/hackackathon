@@ -9,6 +9,8 @@ urlpatterns = [
     path("", views.registro, name="registro"),
     path("verificar/<token>", views.verificar_correo, name="verificar-correo"),
     path("confirmar/<token>", views.confirmar_plaza, name="confirmar-plaza"),
+    path("confirmar/<token>/aceptar", views.aceptar_plaza, name="aceptar-plaza"),
+    path("confirmar/<token>/rechazar", views.rechazar_plaza, name="rechazar-plaza"),
     path(
         "login",
         LoginView.as_view(template_name="login.html", next_page="gestion"),

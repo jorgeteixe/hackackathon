@@ -1,6 +1,6 @@
 {% extends "marco.html" %}
 
-{% block title %}Confirmar plaza{% endblock %}
+{% block title %}Confirmar plaza{% endblock title %}
 
 {% block content %}
 <style>
@@ -31,17 +31,29 @@
 <div id="confirmacion-plaza">
     <h1 style="margin-top: 0;">Confirmar plaza</h1>
 
-    <p>Confirma ahora tu plaza. Tienes hasta el {{ token.fecha_expiracion }}</p>
+    {% if not participante.confirmado and not participante.rechazo and token.valido %}
+        <p>Confirma ahora tu plaza. Tienes hasta el {{ token.fecha_expiracion }}</p>
+    {% elif participante.confirmado and not participante.rechazo %}
+        <p>Aceptaste tu plaza. Puedes rechazarla si no vas a venir cuando quieras</p>
+    {% elif participante.rechazo %}
+        <p>Rechazaste tu plaza el {{ participante.fecha_rechazo_plaza }}. Si esto es un error, contacta con nosotros a través de <a href="mailto:hackudc@gpul.org?subject=[Registro] - Recuperar plaza ({{ participante.correo }})">hackudc@gpul.org</a>.</p>
+    {% else %}
+        <p>Tu token caducó. Si aún quieres aceptar tu plaza, contacta con nosotros a traveś de <a href="mailto:hackudc@gpul.org?subject=[Registro] - Token caducado ({{ token }})">hackudc@gpul.org</a> para ver si esto es posible.</p>
+    {% endif %}
 
     <div style="display: flex;">
-        <form action="{% url 'confirmar-plaza' token.token %}" method="post">
+        {% if participante.confirmado and not participante.rechazo or token.valido and not participante.rechazo %}
+        <form action="{% url 'rechazar-plaza' token.token %}" method="post">
             {% csrf_token %}
             <button type="submit" id="rechazar">Rechazar la plaza</button>
         </form>
-        <form action="{% url 'confirmar-plaza' token.token %}" method="post">
+        {% endif %}
+        {% if token.valido and not participante.confirmado and not participante.rechazo %}
+        <form action="{% url 'aceptar-plaza' token.token %}" method="post">
             {% csrf_token %}
             <button type="submit" id="confirmar">Confirmar la plaza</button>
         </form>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}

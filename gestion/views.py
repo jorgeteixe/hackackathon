@@ -109,17 +109,16 @@ def verificar_correo(request: HttpRequest, token: str):
             {"motivo": "Token expirado", "token": token},
         )
 
-    ahora = timezone.now()
-
-    participante.fecha_verificacion_correo = ahora
-    participante.save()
-
-    token_obj.fecha_uso = ahora
-
     if not participante.verificado():
-        messages.success(request, "Correo verificado correctamente")
-    else:
-        messages.info(request, "Ya habías verificado tu correo")
+        ahora = timezone.now()
+
+        participante.fecha_verificacion_correo = ahora
+        participante.save()
+
+        token_obj.fecha_uso = ahora
+        token_obj.save()
+
+    messages.success(request, "Correo verificado correctamente")
     return render(request, "verificacion_correcta.html", {"participante": participante})
 
 
@@ -127,42 +126,86 @@ def verificar_correo(request: HttpRequest, token: str):
 @require_http_methods(["GET", "POST"])
 def confirmar_plaza(request: HttpRequest, token: str):
     token_obj = Token.objects.filter(token=token, tipo="CONFIRMACION").first()
+
     if not token_obj:
         messages.error(request, "Token inválido")
-        return redirect("registro")
+        return render(request, "vacio.html", {"titulo": "Confirmar plaza"})
 
     participante: Participante = Participante.objects.get(
         correo=token_obj.persona.correo
     )
 
-    if request.method == "POST":
-        ahora = timezone.now()
+    if request.method == "GET":
+        # if participante.confirmado() and not participante.rechazo():
+        #     messages.info(request, "Ya habías confirmado tu plaza")
+        # elif participante.rechazo():
+        #     messages.info(request, "Ya habías rechazado tu plaza")
 
-        participante.fecha_confirmacion_plaza = ahora
-        participante.save()
-
-        token_obj.fecha_uso = ahora
-        token_obj.save()
-
-        return HttpResponse("Pues ya estás aceptado")
+        return render(
+            request,
+            "confirmar-plaza.html",
+            {"token": token_obj, "participante": participante},
+        )
 
     if not token_obj.valido() and not participante.confirmado():
         messages.error(
             request,
             "El token de verificación ha expirado. Ponte en contacto con nosotros para confirmar tu plaza a través de hackudc@gpul.org.",
         )
-        return redirect("registro")
 
-    if participante.confirmado():
-        return HttpResponse("Ya estás aceptado")
+    return render(request, "vacio.html", {"titulo": "Confirmar plaza"})
 
-    return render(
-        request,
-        "confirmar-plaza.html",
-        {
-            "token": token_obj,
-        },
+
+@login_not_required
+@require_http_methods(["POST"])
+def aceptar_plaza(request: HttpRequest, token: str):
+    token_obj = Token.objects.filter(token=token, tipo="CONFIRMACION").first()
+
+    if not token_obj.valido():
+        messages.error(
+            request,
+            "Token caducado. No puedes confirmar tu plaza. Si crees que es un error, ponte en contacto a través de hackudc@gpul.org para solucionarlo",
+        )
+        return redirect("confirmar-plaza", token)
+
+    participante: Participante = Participante.objects.get(
+        correo=token_obj.persona.correo
     )
+
+    ahora = timezone.now()
+
+    participante.fecha_confirmacion_plaza = ahora
+    participante.save()
+
+    token_obj.fecha_uso = ahora
+    token_obj.save()
+
+    messages.success(request, "Plaza confirmada.")
+    return redirect("confirmar-plaza", token)
+
+
+@login_not_required
+@require_http_methods(["POST"])
+def rechazar_plaza(request: HttpRequest, token: str):
+    token_obj = Token.objects.filter(token=token, tipo="CONFIRMACION").first()
+
+    if not token_obj:
+        messages.error(request, "Token inválido")
+        return render(request, "vacio.html")
+
+    ahora = timezone.now()
+
+    participante: Participante = Participante.objects.get(
+        correo=token_obj.persona.correo
+    )
+    participante.fecha_rechazo_plaza = ahora
+    participante.save()
+
+    messages.success(
+        request,
+        "Has rechazado tu plaza. Si te arrepientes, contáctanos en hackudc@gpul.org",
+    )
+    return redirect("confirmar-plaza", token)
 
 
 def gestion(request: HttpRequest):

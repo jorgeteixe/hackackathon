@@ -123,6 +123,12 @@ class Persona(PersonaAbstracta):
         default=None,
         verbose_name="Fecha de confirmación de la plaza",
     )
+    fecha_rechazo_plaza = models.DateTimeField(
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name="Fecha de rechazo de la plaza",
+    )
 
     @admin.display(
         boolean=True, ordering="fecha_verificacion_correo", description="Verificado"
@@ -139,6 +145,10 @@ class Persona(PersonaAbstracta):
     )
     def confirmado(self):
         return self.fecha_confirmacion_plaza is not None
+
+    @admin.display(boolean=True, ordering="fecha_rechazo_plaza", description="Rechazo")
+    def rechazo(self):
+        return self.fecha_rechazo_plaza is not None
 
     def __str__(self):
         return f"{self.nombre} ({self.correo})"

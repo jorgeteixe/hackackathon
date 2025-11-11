@@ -78,6 +78,7 @@ class EstadoParticipanteListFilter(admin.SimpleListFilter):
             ("verificado", "Correo verificado"),
             ("aceptado", "Aceptado"),
             ("confirmado", "Plaza confirmada"),
+            ("rechazo", "Plaza rechazada"),
         ]
 
     def queryset(self, request, queryset):
@@ -88,6 +89,7 @@ class EstadoParticipanteListFilter(admin.SimpleListFilter):
                     fecha_verificacion_correo__isnull=True,
                     fecha_aceptacion__isnull=True,
                     fecha_confirmacion_plaza__isnull=True,
+                    fecha_rechazo_plaza__isnull=True,
                 )
             case "verificado":
                 return queryset.filter(
@@ -95,6 +97,7 @@ class EstadoParticipanteListFilter(admin.SimpleListFilter):
                     fecha_verificacion_correo__isnull=False,
                     fecha_aceptacion__isnull=True,
                     fecha_confirmacion_plaza__isnull=True,
+                    fecha_rechazo_plaza__isnull=True,
                 )
             case "aceptado":
                 return queryset.filter(
@@ -102,6 +105,7 @@ class EstadoParticipanteListFilter(admin.SimpleListFilter):
                     fecha_verificacion_correo__isnull=False,
                     fecha_aceptacion__isnull=False,
                     fecha_confirmacion_plaza__isnull=True,
+                    fecha_rechazo_plaza__isnull=True,
                 )
             case "confirmado":
                 return queryset.filter(
@@ -109,6 +113,14 @@ class EstadoParticipanteListFilter(admin.SimpleListFilter):
                     fecha_verificacion_correo__isnull=False,
                     fecha_aceptacion__isnull=False,
                     fecha_confirmacion_plaza__isnull=False,
+                    fecha_rechazo_plaza__isnull=True,
+                )
+            case "rechazo":
+                return queryset.filter(
+                    fecha_registro__isnull=False,
+                    fecha_verificacion_correo__isnull=False,
+                    fecha_aceptacion__isnull=False,
+                    fecha_rechazo_plaza__isnull=False,
                 )
 
 
@@ -171,6 +183,7 @@ class ParticipanteAdmin(admin.ModelAdmin):
                     "fecha_verificacion_correo",
                     "fecha_aceptacion",
                     "fecha_confirmacion_plaza",
+                    "fecha_rechazo_plaza",
                     "motivacion",
                     "notas",
                 ]
@@ -184,6 +197,7 @@ class ParticipanteAdmin(admin.ModelAdmin):
         "fecha_verificacion_correo",
         "fecha_aceptacion",
         "fecha_confirmacion_plaza",
+        "fecha_rechazo_plaza",
     ]
 
     list_display = [
@@ -197,6 +211,7 @@ class ParticipanteAdmin(admin.ModelAdmin):
         "verificado",
         "aceptado",
         "confirmado",
+        "rechazo",
     ]
     list_filter = [EstadoParticipanteListFilter, "centro_estudio", "ciudad"]
     actions = [aceptar_participante]

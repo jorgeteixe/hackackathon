@@ -17,7 +17,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         participantes = Participante.objects.filter(
-            fecha_aceptacion__isnull=False, fecha_confirmacion_plaza__isnull=True
+            fecha_aceptacion__isnull=False,
+            fecha_confirmacion_plaza__isnull=True,
+            fecha_rechazo_plaza__isnull=True,
         )
 
         for participante in participantes:
@@ -45,6 +47,12 @@ class Command(BaseCommand):
                 )
                 email.send(fail_silently=False)
             except ConnectionRefusedError:
-                self.stdout.write(self.style.ERROR("Error al mandar un correo"))
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"Error al mandar el correo a {participante.correo}"
+                    )
+                )
                 break
-            self.stdout.write(self.style.SUCCESS("Mensajes enviados"))
+            self.stdout.write(
+                self.style.SUCCESS(f"Mensaje enviados a {participante.correo}")
+            )
