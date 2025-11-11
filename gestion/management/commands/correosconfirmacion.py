@@ -80,7 +80,7 @@ class Command(BaseCommand):
                     settings.EMAIL_CONFIRMACION_ASUNTO,
                     render_to_string("correo/confirmacion_plaza.txt", params),
                     to=(participante.correo,),
-                    reply_to=("info@gpul.org",),
+                    reply_to=("hackudc@gpul.org",),
                     headers={
                         "Message-ID": f"hackudc-{token.fecha_creacion.timestamp()}"
                     },

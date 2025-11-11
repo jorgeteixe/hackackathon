@@ -56,7 +56,7 @@ def registro(request: HttpRequest):
                 settings.EMAIL_VERIFICACION_ASUNTO,
                 render_to_string("correo/verificacion_correo.txt", params),
                 to=(participante.correo,),
-                reply_to=("info@gpul.org",),
+                reply_to=("hackudc@gpul.org",),
                 headers={"Message-ID": f"hackudc-{token.fecha_creacion.timestamp()}"},
             )
             email.attach_alternative(
