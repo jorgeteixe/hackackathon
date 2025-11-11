@@ -7,3 +7,7 @@ media
 
 # Python
 __pycache__
+
+# Others
+*.csv
+.idea
