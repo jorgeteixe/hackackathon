@@ -26,6 +26,7 @@
                 {% csrf_token %}
             </form>
         {% endif %}
+        {% if not ocultar_nav %}
         <nav style="display: flex;">
             <a href="https://hackudc.gpul.org">Volver al inicio</a>
             {% if user.is_authenticated %}
@@ -33,6 +34,7 @@
                 <a href="#" onclick="document.getElementById('logout-form').submit()" style="color: var(--rojo); border-color: var(--rojo); margin-left: auto; margin-right: 0;">Cerrar sesión</a>
             {% endif %}
         </nav>
+        {% endif %}
         <div class="messages">
             {% for message in messages %}
             <div class="message message-{{ message.tags }}">{{ message }}</div>

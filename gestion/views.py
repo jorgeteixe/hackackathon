@@ -88,7 +88,7 @@ def verificar_correo(request: HttpRequest, token: str):
         return render(
             request,
             "verificacion_incorrecta.html",
-            {"motivo": "Token inválido", "token": token},
+            {"motivo": "Token inválido", "token": token, "ocultar_nav": True},
         )
 
     participante: Participante = Participante.objects.get(
@@ -103,7 +103,7 @@ def verificar_correo(request: HttpRequest, token: str):
         return render(
             request,
             "verificacion_incorrecta.html",
-            {"motivo": "Token expirado", "token": token},
+            {"motivo": "Token expirado", "token": token, "ocultar_nav": True},
         )
 
     if not participante.verificado():
@@ -116,7 +116,11 @@ def verificar_correo(request: HttpRequest, token: str):
         token_obj.save()
 
     messages.success(request, "Correo verificado correctamente")
-    return render(request, "verificacion_correcta.html", {"participante": participante})
+    return render(
+        request,
+        "verificacion_correcta.html",
+        {"participante": participante, "ocultar_nav": True},
+    )
 
 
 @login_not_required
@@ -133,15 +137,10 @@ def confirmar_plaza(request: HttpRequest, token: str):
     )
 
     if request.method == "GET":
-        # if participante.confirmado() and not participante.rechazo():
-        #     messages.info(request, "Ya habías confirmado tu plaza")
-        # elif participante.rechazo():
-        #     messages.info(request, "Ya habías rechazado tu plaza")
-
         return render(
             request,
             "confirmar-plaza.html",
-            {"token": token_obj, "participante": participante},
+            {"token": token_obj, "participante": participante, "ocultar_nav": True},
         )
 
     if not token_obj.valido() and not participante.confirmado():
@@ -150,7 +149,9 @@ def confirmar_plaza(request: HttpRequest, token: str):
             "El token de verificación ha expirado. Ponte en contacto con nosotros para confirmar tu plaza a través de hackudc@gpul.org.",
         )
 
-    return render(request, "vacio.html", {"titulo": "Confirmar plaza"})
+    return render(
+        request, "vacio.html", {"titulo": "Confirmar plaza", "ocultar_nav": True}
+    )
 
 
 @login_not_required
