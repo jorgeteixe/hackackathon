@@ -65,6 +65,9 @@ class ParticipanteForm(forms.ModelForm):
             RestriccionAlimentaria.objects.all().order_by("id_restriccion")
         )
 
+    class Media:
+        css = {"all": ["css/registro.css"]}
+
 
 class Registro(forms.Form):
     persona = forms.CharField(label="Correo a registrar", max_length=100)

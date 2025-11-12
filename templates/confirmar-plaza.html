@@ -1,32 +1,13 @@
 {% extends "marco.html" %}
 
 {% block title %}Confirmar plaza{% endblock title %}
+{% load static %}
+
+{% block head %}
+<link href="{% static 'css/confirmar.css' %}" media="all" rel="stylesheet">
+{% endblock head %}
 
 {% block content %}
-<style>
-    button {
-        border: none;
-        padding: .5rem 1rem;
-        border-radius: 9999px;
-        margin-right: 1em;
-
-        cursor: pointer;
-    }
-
-    #confirmar { background-color: #28a745; }
-    #rechazar { color: #dc3545; border: 1px solid #dc3545; background-color: transparent; }
-
-    #confirmacion-plaza {
-        width: 65%;
-        background-color: var(--fondo);
-        border: 2px solid var(--borde);
-        border-radius: 0.5em;
-        padding: 1em;
-
-        display: block;
-        margin: 0 auto;
-    }
-</style>
 
 <div id="confirmacion-plaza">
     <h1 style="margin-top: 0;">Confirmar plaza</h1>

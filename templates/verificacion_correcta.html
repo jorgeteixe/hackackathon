@@ -3,24 +3,13 @@
 {% block title %}Verificación correo{% endblock title %}
 {% load static %}
 
+{% block head %}
+<link href="{% static 'css/verificar.css' %}" media="all" rel="stylesheet">
+{% endblock head %}
+
 {% block content %}
 <style>
-    #hackudc-logo {
-        width: 50%;
 
-        display: block;
-        margin: 0 auto;
-    }
-
-    #hackudc-registro {
-        text-align: center;
-        font-size: 3em;
-    }
-
-    #hackudc-registro span {
-        color: var(--amarillo-hackudc);
-        text-shadow: 3px 3px 0px var(--sombra-hackudc);
-    }
 </style>
 
 <img src="{% static 'svg/hackudc.svg' %}" id="hackudc-logo">
