@@ -41,7 +41,8 @@ TIPOS_TOKEN = (
 
 
 def ruta_cv(instance, filename):
-    return f"cv/{instance.dni}_{instance.correo.replace("@", "-").replace(".", "-")}_pendiente.pdf"
+    correo = instance.correo.replace("@", "-").replace(".", "-")
+    return f"cv/{instance.dni}_{correo}.pdf"
 
 
 def validador_pdf(value):
