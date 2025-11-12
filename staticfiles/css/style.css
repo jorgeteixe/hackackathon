@@ -281,3 +281,26 @@ div.message.message-error {
     text-decoration: none;
     color: #f0f0f0;
 }
+
+/* Otros */
+#logo {
+    width: 50%;
+
+    display: block;
+    margin: 0 auto;
+}
+
+#subtitulo {
+    text-align: center;
+    font-size: 3em;
+}
+
+#subtitulo span {
+    color: var(--amarillo-hackudc);
+    text-shadow: 3px 3px 0px var(--sombra-hackudc);
+}
+
+@media(max-width: 900px) {
+    #logo { width: 75%; }
+    #subtitulo { font-size: 2.5em; }
+}

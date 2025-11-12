@@ -183,3 +183,13 @@ fieldset>div {
 #submit-ancho:hover #flecha-submit {
     right: 0.75em;
 }
+
+@media(max-width: 900px) {
+    form div {
+        max-width: 100%;
+        width: 95%;
+    }
+    #registro form {
+        margin: 0 1.5em;
+    }
+}
