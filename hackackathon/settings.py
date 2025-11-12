@@ -1,5 +1,7 @@
 # Copyright (C) 2025-now  p.fernandezf <p@fernandezf.es> & iago.rivas <delthia@delthia.com>
 
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import os
 from pathlib import Path
 
@@ -10,27 +12,12 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Configuración añadida específica ------------------------------------
+# Configuración de entorno ----------------------------------------------------
 # Host de la web general del evento
 HOST_LANDING = os.getenv("HOST_LANDING")
 # Host de la web del registro (esta)
 HOST_REGISTRO = os.getenv("HOST_REGISTRO")
-
-# Inicio del evento
-FECHA_INICIO_EVENTO = os.getenv("FECHA_INICIO_EVENTO")
-# Fin del evento
-FECHA_FIN_EVENTO = os.getenv("FECHA_FIN_EVENTO")
-# Fin del plazo de registro
-FECHA_FIN_REGISTRO = os.getenv("FECHA_FIN_REGISTRO")
-
-# Nombre y mail del administrador
-NOMBRE_ADMIN = os.getenv("NOMBRE_ADMIN")
-MAIL_ADMIN = os.getenv("MAIL_ADMIN")
-
-# Asuntos de los correos
-EMAIL_VERIFICACION_ASUNTO = "HackUDC 2026 - Confirma tu correo ✉️"
-EMAIL_CONFIRMACION_ASUNTO = "HackUDC 2026 - Confirma tu plaza! <emoji>"
-# ---------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -180,10 +167,33 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 EMAIL_HOST = "localhost"
 EMAIL_PORT = 8025
 
-ADMINS = [
-    (NOMBRE_ADMIN, MAIL_ADMIN),
-]
-
 # DEFAULT_FROM_EMAIL = ("no-reply@gpul.org",)
 DEFAULT_FROM_EMAIL = "no-reply@gpul.org"
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Configuración de entorno ----------------------------------------------------
+# Inicio del evento
+FECHA_INICIO_EVENTO = datetime.fromisoformat(os.getenv("FECHA_INICIO_EVENTO")).replace(
+    tzinfo=ZoneInfo(TIME_ZONE)
+)
+# Fin del evento
+FECHA_FIN_EVENTO = datetime.fromisoformat(os.getenv("FECHA_FIN_EVENTO")).replace(
+    tzinfo=ZoneInfo(TIME_ZONE)
+)
+# Fin del plazo de registro
+FECHA_FIN_REGISTRO = datetime.fromisoformat(os.getenv("FECHA_FIN_REGISTRO")).replace(
+    tzinfo=ZoneInfo(TIME_ZONE)
+)
+
+# Nombre y mail del administrador
+NOMBRE_ADMIN = os.getenv("NOMBRE_ADMIN")
+MAIL_ADMIN = os.getenv("MAIL_ADMIN")
+
+# Asuntos de los correos
+EMAIL_VERIFICACION_ASUNTO = "HackUDC 2026 - Confirma tu correo ✉️"
+EMAIL_CONFIRMACION_ASUNTO = "HackUDC 2026 - Confirma tu plaza! <emoji>"
+# -----------------------------------------------------------------------------
+
+ADMINS = [
+    (NOMBRE_ADMIN, MAIL_ADMIN),
+]
