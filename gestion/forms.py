@@ -55,7 +55,9 @@ class ParticipanteForm(forms.ModelForm):
         }
 
         widgets = {
-            "fecha_nacimiento": forms.DateInput(attrs={"type": "date"}),
+            "fecha_nacimiento": forms.DateInput(
+                attrs={"type": "date"}, format="%Y-%m-%d"
+            ),
             "restricciones_alimentarias": forms.CheckboxSelectMultiple(),
             "cv": forms.ClearableFileInput(attrs={"accept": ".pdf"}),
         }
