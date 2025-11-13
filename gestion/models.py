@@ -170,14 +170,7 @@ class Mentor(Persona):
 
 class Participante(Persona):
     telefono = models.CharField(max_length=16, null=True, verbose_name="Teléfono")
-    ano_nacimiento = models.PositiveIntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(1970, "El año debe ser mayor o igual a 1970."),
-            MaxValueValidator(2015, "El año debe ser menor o igual a 2015."),
-        ],
-        verbose_name="Año de nacimiento",
-    )
+    fecha_nacimiento = models.DateField(null=True, verbose_name="Fecha de nacimiento")
     nivel_estudio = models.CharField(
         null=True,
         max_length=128,

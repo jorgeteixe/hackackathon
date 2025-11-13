@@ -1,5 +1,6 @@
 # Copyright (C) 2025-now  p.fernandezf <p@fernandezf.es> & iago.rivas <delthia@delthia.com>
 
+from datetime import date
 from random import choice, randint
 
 from django.core.management.base import BaseCommand, CommandError
@@ -29,7 +30,9 @@ class Command(BaseCommand):
                 dni=fake.cif(),  # Lo más parecido a un DNI que hay en faker...
                 genero=choice(["Hombre", "Mujer", "Otro"]),
                 telefono=fake.phone_number(),
-                ano_nacimiento=fake.year(),
+                fecha_nacimiento=fake.date_between(
+                    date(1990, 1, 1), date(2008, 12, 31)
+                ),
                 nombre_estudio=choice(["GCED", "GEI", "MUEI", "MUNICS"]),
                 centro_estudio=choice(["FIC", "USC", "UVigo", "Otro"]),
                 curso=randint(1, 4),

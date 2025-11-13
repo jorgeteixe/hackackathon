@@ -20,7 +20,7 @@ class ParticipanteForm(forms.ModelForm):
             "dni",
             "correo",
             "telefono",
-            "ano_nacimiento",
+            "fecha_nacimiento",
             "genero",
             "talla_camiseta",
             "ciudad",
@@ -54,6 +54,7 @@ class ParticipanteForm(forms.ModelForm):
         }
 
         widgets = {
+            "fecha_nacimiento": forms.DateInput(attrs={"type": "date"}),
             "restricciones_alimentarias": forms.CheckboxSelectMultiple(),
             "cv": forms.ClearableFileInput(attrs={"accept": ".pdf"}),
         }

@@ -151,7 +151,7 @@ class ParticipanteAdmin(admin.ModelAdmin):
                     "nombre",
                     "correo",
                     "genero",
-                    "ano_nacimiento",
+                    "fecha_nacimiento",
                     "ciudad",
                     "telefono",
                     "dni",
