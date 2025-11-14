@@ -228,7 +228,12 @@ class ParticipanteAdmin(admin.ModelAdmin):
         "rechazo",
         "error_verificacion",
     ]
-    list_filter = [EstadoParticipanteListFilter, "centro_estudio", "ciudad"]
+    list_filter = [
+        EstadoParticipanteListFilter,
+        "centro_estudio",
+        "nivel_estudio",
+        "ciudad",
+    ]
     actions = [aceptar_participante]
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
