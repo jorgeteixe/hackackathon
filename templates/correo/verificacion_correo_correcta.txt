@@ -14,3 +14,5 @@ Advertencia: Este correo no confirma la asignación de una plaza para la competi
 Si tienes alguna duda o has detectado un dato erróneo en tu inscripción, escríbenos a [hackudc@gpul.org](mailto:hackudc@gpul.org).
 
 Un saludo,
+Organización HackUDC
+Grupo de Programadores e Usuarios de Linux

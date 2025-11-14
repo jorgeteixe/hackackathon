@@ -76,10 +76,9 @@ def registro(request: HttpRequest):
             )
             return render(request, "registro.html", {"form": form})
 
-        messages.success(
-            request, "Registro completado. Revisa tu correo para verificarte!"
+        return render(
+            request, "registro.html", {"form": form, "participante": participante}
         )
-        return redirect("registro")
 
     messages.error(request, "Datos incorrectos")
     return render(request, "registro.html", {"form": form})
@@ -121,9 +120,46 @@ def verificar_correo(request: HttpRequest, token: str):
         token_obj.fecha_uso = ahora
         token_obj.save()
 
-    messages.success(
+        try:
+            params = {
+                "nombre": participante.nombre,
+                "token": token_obj.token,
+                "host": request.get_host(),
+                "asunto": "HackUDC - Correo verificado",
+            }
+            email = EmailMultiAlternatives(
+                "HackUDC - Correo verificado",
+                render_to_string("correo/verificacion_correo_correcta.txt", params),
+                to=(participante.correo,),
+                reply_to=("hackudc@gpul.org",),
+                headers={
+                    "Message-ID": f"hackudc-{token_obj.fecha_creacion.timestamp()}"
+                },
+            )
+            email.attach_alternative(
+                render_to_string("correo/verificacion_correo_correcta.html", params),
+                "text/html",
+            )
+            email.send(fail_silently=False)
+        except Exception as e:
+            pass
+        messages.success(
+            request,
+            "Tu correo está verificado! Vuelve cuando quieras para revisar tus detalles!",
+        )
+        return render(
+            request,
+            "verificacion_correcta.html",
+            {
+                "participante": participante,
+                "form": RevisarParticipanteForm(instance=participante),
+                "ocultar_nav": True,
+            },
+        )
+
+    messages.info(
         request,
-        "Tu correo está verificado! Vuelve cuando quieras para revisar tus detalles!",
+        "Ya habías verificado tu correo. Recibirás más información en breve",
     )
     return render(
         request,
