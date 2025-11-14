@@ -1,6 +1,11 @@
 {% extends "marco.html" %}
 
 {% block title %}Presencia{% endblock title %}
+{% load static %}
+
+{% block head %}
+<link href="{% static 'css/login.css' %}" media="all" rel="stylesheet">
+{% endblock head %}
 
 {% block content %}
 <div id="gestion-presencia">

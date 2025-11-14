@@ -49,11 +49,6 @@ a {
     color: var(--amarillo-hackudc);
 }
 
-/*div#content {
-    margin: 0 auto;
-    margin-bottom: 2rem;
-}*/
-
 div#content,
 nav {
     width: min(calc(100% - 2rem), var(--max-width));
@@ -62,17 +57,27 @@ nav {
     margin-bottom: 1rem;
 }
 
-nav a {
-    text-decoration: none;
-    border: 1px solid var(--amarillo-hackudc);
-    border-radius: 9999px;
-    padding: .5rem 1rem;
-}
-
 nav {
     margin-top: 2em;
 }
 
+.boton {
+    text-decoration: none;
+    border: 1px solid var(--amarillo);
+    border-radius: 9999px;
+    padding: .5rem 1rem;
+}
+
+.boton-azul { color: var(--azul); border-color: var(--azul); }
+.boton-rojo { color: var(--rojo); border-color: var(--rojo); }
+.boton-verde { color: var(--verde); border-color: var(--verde); }
+.boton-rojo-fill { border: none; background-color: var(--rojo); }
+.boton-verde-fill { border: none; background-color: var(--verde); }
+
+.transparente { background-color: transparent;}
+
+
+/* Footer */
 div#footer {
     width: 100%;
     max-width: min(100% - 1em, 1200px);
@@ -106,7 +111,6 @@ div#footer a {
 
 
 /* GENERAL */
-
 .lucide {
     vertical-align: middle;
     width: 1.25em;
@@ -132,7 +136,6 @@ p.warning {
 }
 
 /* Mensajes */
-
 div.messages {
     width: min(calc(100% - 2rem), 600px);
     margin: 1rem auto;
@@ -170,99 +173,6 @@ div.message.message-error {
     color: #f0f0f0;
 }
 
-
-/* LOGIN */
-
-#login h1 {
-    text-align: center;
-    margin-top: max(calc(30vh - 162px), 10vh);
-    margin-bottom: max(calc(30vh - 162px), 10vh);
-    width: 100%;
-}
-
-#login div.login-form {
-    width: min-content;
-    margin: 0 auto;
-    padding: 1.5rem;
-    border-radius: 8px;
-    background-color: #0f0f0f7f;
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(2px);
-}
-
-#login input {
-    padding: 0.5rem;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-
-    background-color: #444;
-    color: #f0f0f0;
-    border: 1px solid #7f7f7f;
-}
-
-#login div.submit-btn {
-    display: flex;
-    justify-content: end;
-}
-
-#login input[type="submit"] {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-#login label,
-#login input {
-    display: flex;
-    flex-direction: column;
-}
-
-#login p.cuenta {
-    text-align: center;
-    font-size: 0.9em;
-    color: #666;
-}
-
-
-/* Gestión presencia */
-
-#gestion-presencia li {
-    text-wrap: nowrap;
-}
-
-#gestion-presencia div.botones {
-    margin-bottom: 1rem;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 0.5em;
-}
-
-#gestion-presencia div.botones a {
-    border: 2px solid #f0f0f0;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    color: #f0f0f0;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#gestion-presencia div.botones a:hover {
-    background-color: #f0f0f07f;
-    color: #0f0f0f;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#gestion-presencia a {
-    margin-left: 0.125rem;
-
-    text-decoration: none;
-    color: #f0f0f0;
-}
-
 /* Otros */
 #logo {
     width: 50%;
@@ -282,6 +192,17 @@ div.message.message-error {
 }
 
 @media(max-width: 900px) {
-    #logo { width: 75%; }
-    #subtitulo { font-size: 2.5em; }
+    #logo {
+        width: 75%;
+    }
+
+    #subtitulo {
+        font-size: 2.5em;
+    }
 }
+
+.flex { display: flex; }
+.ml-1 { margin-left: 1em; }
+.ml-auto { margin-left: auto; }
+.mr-0 { margin-right: 0; }
+.mt-0 { margin-top: 0; }

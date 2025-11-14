@@ -1,0 +1,35 @@
+/* Gestión presencia */
+#gestion-presencia li {
+    text-wrap: nowrap;
+}
+
+#gestion-presencia div.botones {
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+#gestion-presencia div.botones a {
+    border: 2px solid #f0f0f0;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #f0f0f0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#gestion-presencia div.botones a:hover {
+    background-color: #f0f0f07f;
+    color: #0f0f0f;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#gestion-presencia a {
+    margin-left: 0.125rem;
+
+    text-decoration: none;
+    color: #f0f0f0;
+}

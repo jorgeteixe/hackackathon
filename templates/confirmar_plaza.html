@@ -11,7 +11,7 @@
 
 {% include 'logo.html' %}
 <div id="confirmacion-plaza">
-    <h1 style="margin-top: 0;">Confirmar plaza</h1>
+    <h1 class="mt-0">Confirmar plaza</h1>
 
     {% if not participante.confirmado and not participante.rechazo and token.valido %}
         <p>Confirma ahora tu plaza. Tienes hasta el {{ token.fecha_expiracion }}</p>
@@ -23,17 +23,17 @@
         <p>Tu token caducó. Si aún quieres aceptar tu plaza, contacta con nosotros a traveś de <a href="mailto:hackudc@gpul.org?subject=[Registro] - Token caducado ({{ token }})">hackudc@gpul.org</a> para ver si esto es posible.</p>
     {% endif %}
 
-    <div style="display: flex;">
+    <div class="flex">
         {% if participante.confirmado and not participante.rechazo or token.valido and not participante.rechazo %}
         <form action="{% url 'rechazar-plaza' token.token %}" method="post">
             {% csrf_token %}
-            <button type="submit" id="rechazar">Rechazar la plaza</button>
+            <button type="submit" id="rechazar" class="boton boton-rojo">Rechazar la plaza</button>
         </form>
         {% endif %}
         {% if token.valido and not participante.confirmado and not participante.rechazo %}
         <form action="{% url 'aceptar-plaza' token.token %}" method="post">
             {% csrf_token %}
-            <button type="submit" id="confirmar">Confirmar la plaza</button>
+            <button type="submit" id="confirmar" class="boton boton-verde-fill">Confirmar la plaza</button>
         </form>
         {% endif %}
     </div>

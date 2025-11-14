@@ -1,14 +1,5 @@
-button {
-    border: none;
-    padding: .5rem 1rem;
-    border-radius: 9999px;
-    margin-right: 1em;
-
-    cursor: pointer;
-}
-
-#confirmar { background-color: #28a745; }
-#rechazar { color: #dc3545; border: 1px solid #dc3545; background-color: transparent; }
+.boton { margin-right: 1em; cursor: pointer; }
+.boton-rojo { background-color: transparent;}
 
 #confirmacion-plaza {
     width: 65%;

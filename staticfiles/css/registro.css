@@ -1,13 +1,17 @@
 /* FORMULARIO DE REGISTRO */
-#registro form {
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
     border: 2px solid var(--borde);
     border-radius: 0.5em;
+
+    margin: 0 4em;
     padding: 1em;
 
     background-color: var(--fondo);
-    margin: 0 4em;
 }
-
 
 form div {
     display: flex;
@@ -19,12 +23,6 @@ form div {
     margin-top: 0.5em;
 }
 
-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
 /* Restricciones alimentarias */
 div:has(> fieldset) {
     width: 100%;
@@ -32,6 +30,7 @@ div:has(> fieldset) {
 
     margin-top: 2em;
 }
+
 div:has(> #id_detalle_restricciones_alimentarias) {
     max-width: 95%;
     flex: 1 1 100%;
@@ -215,7 +214,13 @@ fieldset>div {
         max-width: 100%;
         width: 95%;
     }
+
     #registro form {
         margin: 0 1.5em;
     }
 }
+
+textarea {
+    margin-top: 0.5em;
+}
+

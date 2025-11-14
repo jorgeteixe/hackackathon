@@ -27,14 +27,15 @@
             </form>
         {% endif %}
         {% if not ocultar_nav %}
-        <nav style="display: flex;">
-            <a href="https://hackudc.gpul.org">Volver al inicio</a>
+        <nav class="flex">
+            <a href="https://hackudc.gpul.org" class="boton">Volver al inicio</a>
             {% if user.is_authenticated %}
-                <a href="/gestion" style="color: var(--azul); border-color: var(--azul); margin-left: 1em;">Gestión</a>
-                <a href="#" onclick="document.getElementById('logout-form').submit()" style="color: var(--rojo); border-color: var(--rojo); margin-left: auto; margin-right: 0;">Cerrar sesión</a>
+                <a href="/gestion" class="boton boton-azul ml-1">Gestión</a>
+                <a href="#" onclick="document.getElementById('logout-form').submit()" class="boton boton-rojo ml-auto mr-0">Cerrar sesión</a>
             {% endif %}
         </nav>
         {% endif %}
+
         <div class="messages">
             {% for message in messages %}
             <div class="message message-{{ message.tags }}">{{ message }}</div>
