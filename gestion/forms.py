@@ -51,7 +51,7 @@ class ParticipanteForm(forms.ModelForm):
         help_texts = {
             "cv": "Currículum vitae en formato PDF. Lo usaremos para conocerte mejor y lo haremos llegar a nuestros patrocinadores si lo deseas.",
             "motivacion": "Se usará conjuntamente con el CV para aceptar las mejores inscripciones en caso de tener más solicitudes que plazas.",
-            "notas": "Otros datos que consideres relevantes (alergias, etc.).",
+            "notas": "Otros datos que consideres relevantes.",
             "quiere_creditos": "Para estudiantes de la UDC",
         }
 
@@ -78,6 +78,7 @@ class RevisarParticipanteForm(ParticipanteForm):
     class Meta(ParticipanteForm.Meta):
         exclude = [
             "cv",
+            "notas",
         ]
 
     class Media(ParticipanteForm.Media):
