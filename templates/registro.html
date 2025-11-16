@@ -6,7 +6,9 @@
 
 {% block content %}
 <div id="registro">
-    {% include 'logo.html' with subtitulo="Regístrate para <span>HackUDC 2026</span>" %}
+    {% include 'logo.html' with titulo="Regístrate en" %}
+
+    <br>
 
     <form action="{% url 'registro' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}

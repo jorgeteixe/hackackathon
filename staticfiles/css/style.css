@@ -186,6 +186,12 @@ div.message.message-error {
     margin: 0 auto;
 }
 
+
+#titulo {
+    text-align: center;
+    font-size: 3em;
+}
+
 #subtitulo {
     text-align: center;
     font-size: 3em;
