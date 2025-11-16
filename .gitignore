@@ -2,8 +2,9 @@
 .env
 db.sqlite3
 
-# Media
-media
+# Assets
+media/
+static/
 
 # Python
 __pycache__
