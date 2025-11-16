@@ -52,8 +52,7 @@ def registro(request: HttpRequest):
             params = {
                 "nombre": participante.nombre,
                 "token": token.token,
-                "host": request.get_host(),
-                "asunto": settings.EMAIL_VERIFICACION_ASUNTO,
+                "host": settings.HOST_REGISTRO,
             }
             email = EmailMultiAlternatives(
                 settings.EMAIL_VERIFICACION_ASUNTO,

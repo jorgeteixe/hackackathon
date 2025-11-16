@@ -1,7 +1,6 @@
 <!doctype html>
 <html>
     <head>
-        <title>{% block title %}{% endblock title %}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <base target="_blank">
@@ -69,14 +68,14 @@
 <body style="background-color: #181818; font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0; color: white;">
     <div class="gutter" style="padding: 30px;">&nbsp;</div>
     <div class="wrap" style="padding: 30px; max-width: 525px; margin: 0 auto;">
-        <img src="http://127.0.0.1:8000/static/img/hackudc.png" style="width: 80%; margin: auto; display: block">
+        <img src="https://{{ host }}/static/img/hackudc.png" style="width: 80%; margin: auto; display: block">
         {% block content %}{% endblock content %}
 
         <p>Atentamente,</p>
 
       <!-- footer -->
       <div style="display: flex; flex-direction: row; width: 100%; color: #FFFA">
-        <img src="http://127.0.0.1:8000/static/img/gpul.png" style="width: 5rem; height: 100%">
+        <img src="https://{{ host }}/static/img/gpul.png" style="width: 5rem; height: 100%">
         <div>
           <small>Organización HackUDC</small><br>
           <small>Grupo de Programadores e Usuarios de Linux</small>

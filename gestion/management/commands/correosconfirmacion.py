@@ -75,7 +75,6 @@ class Command(BaseCommand):
                     "token": token.token,
                     "expiracion": fecha_expiracion,
                     "host": settings.HOST_REGISTRO,
-                    "asunto": settings.EMAIL_CONFIRMACION_ASUNTO,
                 }
                 email = EmailMultiAlternatives(
                     settings.EMAIL_CONFIRMACION_ASUNTO,
