@@ -26,13 +26,10 @@
                 {% csrf_token %}
             </form>
         {% endif %}
-        {% if not ocultar_nav %}
+        {% if user.is_authenticated %}
         <nav class="flex">
-            <a href="https://hackudc.gpul.org" class="boton">Volver al inicio</a>
-            {% if user.is_authenticated %}
-                <a href="/gestion" class="boton boton-azul ml-1">Gestión</a>
-                <a href="#" onclick="document.getElementById('logout-form').submit()" class="boton boton-rojo ml-auto mr-0">Cerrar sesión</a>
-            {% endif %}
+            <a href="/gestion" class="boton boton-azul ml-1">Gestión</a>
+            <a href="#" onclick="document.getElementById('logout-form').submit()" class="boton boton-rojo ml-auto mr-0">Cerrar sesión</a>
         </nav>
         {% endif %}
 
