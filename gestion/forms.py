@@ -60,6 +60,7 @@ class ParticipanteForm(forms.ModelForm):
                 attrs={"type": "date"}, format="%Y-%m-%d"
             ),
             "restricciones_alimentarias": forms.CheckboxSelectMultiple(),
+            "notas": forms.Textarea(attrs={"rows": 2}),
             "cv": forms.ClearableFileInput(attrs={"accept": ".pdf"}),
         }
 
