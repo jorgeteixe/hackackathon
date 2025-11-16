@@ -93,7 +93,7 @@ def verificar_correo(request: HttpRequest, token: str):
         return render(
             request,
             "verificacion_incorrecta.html",
-            {"motivo": "Token inválido", "token": token, "ocultar_nav": True},
+            {"motivo": "Token inválido", "token": token},
         )
 
     participante: Participante = Participante.objects.get(
@@ -108,7 +108,7 @@ def verificar_correo(request: HttpRequest, token: str):
         return render(
             request,
             "verificacion_incorrecta.html",
-            {"motivo": "Token expirado", "token": token, "ocultar_nav": True},
+            {"motivo": "Token expirado", "token": token},
         )
 
     if not participante.verificado():
@@ -153,7 +153,6 @@ def verificar_correo(request: HttpRequest, token: str):
             {
                 "participante": participante,
                 "form": RevisarParticipanteForm(instance=participante),
-                "ocultar_nav": True,
             },
         )
 
@@ -167,7 +166,6 @@ def verificar_correo(request: HttpRequest, token: str):
         {
             "participante": participante,
             "form": RevisarParticipanteForm(instance=participante),
-            "ocultar_nav": True,
         },
     )
 
@@ -189,7 +187,7 @@ def confirmar_plaza(request: HttpRequest, token: str):
         return render(
             request,
             "confirmar_plaza.html",
-            {"token": token_obj, "participante": participante, "ocultar_nav": True},
+            {"token": token_obj, "participante": participante},
         )
 
     if not token_obj.valido() and not participante.confirmado():
@@ -198,9 +196,7 @@ def confirmar_plaza(request: HttpRequest, token: str):
             "El token de verificación ha expirado. Ponte en contacto con nosotros para confirmar tu plaza a través de hackudc@gpul.org.",
         )
 
-    return render(
-        request, "vacio.html", {"titulo": "Confirmar plaza", "ocultar_nav": True}
-    )
+    return render(request, "vacio.html", {"titulo": "Confirmar plaza"})
 
 
 @login_not_required
@@ -241,9 +237,7 @@ def rechazar_plaza(request: HttpRequest, token: str):
         return render(request, "vacio.html")
 
     if request.method == "GET":
-        return render(
-            request, "rechazar_plaza.html", {"token": token_obj, "ocultar_nav": True}
-        )
+        return render(request, "rechazar_plaza.html", {"token": token_obj})
 
     ahora = timezone.now()
 
