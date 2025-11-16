@@ -98,5 +98,5 @@ class Command(BaseCommand):
                 )
                 break
             self.stdout.write(
-                self.style.SUCCESS(f"Mensaje enviados a {participante.correo}")
+                self.style.SUCCESS(f"Mensaje enviado a {participante.correo}")
             )
